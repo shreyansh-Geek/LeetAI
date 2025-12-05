@@ -1,0 +1,56 @@
+# ====================================================
+#     COURSE BUILDER PROJECT — FULLSTACK IGNORE
+# ====================================================
+
+# ----------------------------
+# FRONTEND (Next.js)
+# ----------------------------
+/course-builder-frontend/node_modules/
+/course-builder-frontend/.next/
+/course-builder-frontend/out/
+/course-builder-frontend/dist/
+
+# Logs
+*.log
+
+# Env files
+/course-builder-frontend/.env
+/course-builder-frontend/*.env.local
+
+# ----------------------------
+# BACKEND (FastAPI / Python)
+# ----------------------------
+/course-builder-backend/app/__pycache__/
+/course-builder-backend/app/api/__pycache__/
+/course-builder-backend/app/core/__pycache__/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*$py.class
+
+# Virtual Environments
+/course-builder-backend/venv1/
+/course-builder-backend/Include/
+/course-builder-backend/Lib/
+/course-builder-backend/pyvenv.cfg
+/course-builder-backend/.venv/
+/course-builder-backend/venv/
+/course-builder-backend/Scripts/
+
+# Backend env
+/course-builder-backend/.env
+
+# ----------------------------
+# OS & Editor Files
+# ----------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ----------------------------
+# Misc
+# ----------------------------
+*.swp
