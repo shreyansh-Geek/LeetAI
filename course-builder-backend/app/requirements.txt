@@ -1,1 +1,12 @@
-pip freeze > requirements.txt
+fastapi
+uvicorn
+pydantic
+requests
+isodate
+python-dotenv
+
+# Google Gemini / GenAI
+google-genai
+
+# Optional, but common
+typing-extensions
