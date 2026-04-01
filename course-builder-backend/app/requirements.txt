@@ -10,3 +10,10 @@ google-genai
 
 # Optional, but common
 typing-extensions
+
+# Auth & Database
+motor
+pymongo
+passlib[bcrypt]
+pyjwt
+python-multipart
