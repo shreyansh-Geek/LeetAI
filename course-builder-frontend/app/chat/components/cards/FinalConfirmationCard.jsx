@@ -1,24 +1,39 @@
 "use client";
 
 import { useChatStore } from "../../store/useChatStore";
+import { useCourseBuildStore } from "@/app/course/store/useCourseBuildStore";
+import { useProfileStore } from "../../store/useProfileStore";
+import { useRouter } from "next/navigation";
 
 export default function FinalConfirmationCard() {
-  const sendFinal = useChatStore((s) => s.sendFinalBuildRequest);
   const setShowFinalModal = useChatStore((s) => s.setShowFinalModal);
 
+  // Phase 2 builder
+  const startBuild = useCourseBuildStore((s) => s.startBuild);
+
+  // Get final profile
+  const profile = useProfileStore((s) => s.profile);
+
+  const router = useRouter();
+
   async function handleStart() {
-    await sendFinal();
+    // CLOSE MODAL
+    setShowFinalModal(false);
+
+    // OPTIONAL SUMMARY (can be blank)
+    const summary = ""; // You can compute this if needed
+
+    // TRIGGER PHASE 2 BACKEND + MOVE TO /course
+    await startBuild(router, profile, summary);
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={() => setShowFinalModal(false)}
       />
 
-      {/* Modal */}
       <div
         className="
           relative w-[90%] max-w-md space-y-4 p-6 rounded-2xl
