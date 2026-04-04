@@ -78,27 +78,6 @@ export default function ChatLayout() {
           </section>
         </div>
       </main>
-
-      {/* FINAL CONFIRMATION MODAL */}
-      {showFinalModal && <FinalConfirmationCard />}
-
-      {/* SCROLLBAR */}
-      <style jsx>{`
-        #chat-scroll::-webkit-scrollbar {
-          width: 6px;
-        }
-        #chat-scroll::-webkit-scrollbar-thumb {
-          background: linear-gradient(
-            180deg,
-            rgba(36, 207, 166, 0.7),
-            rgba(12, 65, 53, 0.9)
-          );
-          border-radius: 999px;
-        }
-        #chat-scroll::-webkit-scrollbar-track {
-          background: transparent;
-        }
-      `}</style>
     </div>
   );
 }
