@@ -54,7 +54,6 @@ export default function MotivationCard() {
           max={10}
           value={mot}
           onChange={(e) => setMot(e.target.value)}
-          onBlur={trySubmit}
           placeholder="e.g. 7"
           className="
             w-full px-3 py-2 rounded-lg text-sm text-slate-100
@@ -76,11 +75,7 @@ export default function MotivationCard() {
             <button
               key={opt}
               disabled={isSubmitting}
-              onClick={async () => {
-                setStructure(opt as StructurePreference);
-                await Promise.resolve();
-                trySubmit();
-              }}
+              onClick={() => setStructure(opt as StructurePreference)}
               className={`
                 px-3 py-2 text-xs rounded-lg border transition
                 ${
@@ -95,6 +90,17 @@ export default function MotivationCard() {
           ))}
         </div>
       </div>
+
+      <button
+        onClick={trySubmit}
+        disabled={!allFilled() || isSubmitting}
+        className="
+          w-full py-3 mt-4 rounded-xl font-semibold text-black transition
+          bg-[#24CFA6] hover:bg-[#24CFA6]/90 disabled:opacity-50 disabled:cursor-not-allowed
+        "
+      >
+        {isSubmitting ? "Saving..." : "Continue"}
+      </button>
     </div>
   );
 }
