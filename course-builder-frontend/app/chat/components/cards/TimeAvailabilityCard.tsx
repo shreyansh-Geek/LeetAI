@@ -55,7 +55,6 @@ export default function TimeAvailabilityCard() {
           placeholder="Hours per day"
           value={hours}
           onChange={(e) => setHours(e.target.value)}
-          onBlur={trySubmit}
           className="
             bg-[#0a0f0e]/70 border border-[#24CFA6]/25 rounded-xl px-3 py-2 
             text-sm text-slate-200 outline-none
@@ -68,7 +67,6 @@ export default function TimeAvailabilityCard() {
           placeholder="Days per week"
           value={days}
           onChange={(e) => setDays(e.target.value)}
-          onBlur={trySubmit}
           className="
             bg-[#0a0f0e]/70 border border-[#24CFA6]/25 rounded-xl px-3 py-2 
             text-sm text-slate-200 outline-none
@@ -87,11 +85,7 @@ export default function TimeAvailabilityCard() {
             <button
               key={opt}
               disabled={isSubmitting}
-              onClick={async () => {
-                setDuration(opt);
-                await Promise.resolve();
-                await trySubmit();
-              }}
+              onClick={() => setDuration(opt)}
               className={`
                 rounded-xl px-4 py-2 text-left text-sm transition
                 ${
@@ -106,6 +100,17 @@ export default function TimeAvailabilityCard() {
           );
         })}
       </div>
+
+      <button
+        onClick={trySubmit}
+        disabled={!allFilled() || isSubmitting}
+        className="
+          w-full py-3 mt-4 rounded-xl font-semibold text-black transition
+          bg-[#24CFA6] hover:bg-[#24CFA6]/90 disabled:opacity-50 disabled:cursor-not-allowed
+        "
+      >
+        {isSubmitting ? "Saving..." : "Continue"}
+      </button>
     </div>
   );
 }
