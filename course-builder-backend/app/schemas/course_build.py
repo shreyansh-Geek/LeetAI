@@ -30,6 +30,9 @@ class CourseBuildRequest(BaseModel):
     userSummary: Optional[str] = None
 
 class CourseBuildResponse(BaseModel):
+    id: Optional[str] = None
+    user_id: Optional[str] = None
+    created_at: Optional[str] = None
     summary: str
     modules: List[CourseModule]
     playlist: List[PlaylistItem]
