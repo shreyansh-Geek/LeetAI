@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from google import genai
 from app.core.config import settings
 from app.ai.prompt_system import SYSTEM_PROMPT
+from app.core.security import get_current_user
 
 import json
 from typing import Any, List, Dict
@@ -70,7 +71,7 @@ CURRENT PROFILE STATE (machine-readable JSON strictly):
 # -------------------------------------------
 
 @router.post("/", response_model=HybridResponse)
-def chat_endpoint(req: ChatRequest):
+def chat_endpoint(req: ChatRequest, current_user: dict = Depends(get_current_user)):
 
     prompt = build_llm_prompt(req.history, req.profile, req.message)
 
