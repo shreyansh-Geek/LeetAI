@@ -1,6 +1,7 @@
 "use client";
 
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { Profile } from "../types/profile";
 
 interface ProfileState {
@@ -18,52 +19,12 @@ interface ProfileState {
   reset: () => void;
 }
 
-export const useProfileStore = create<ProfileState>()((set, get) => ({
-  step: 1,
-  submitted: false,
-
-  profile: {
-    topic: null,
-    skillLevel: null,
-    goalType: null,
-    goalDetail: "",
-    hoursPerDay: null,
-    daysPerWeek: null,
-    durationPreference: "",
-    learningStyle: null,
-    videoLength: null,
-    wantsQuizzes: null,
-    wantsProjects: null,
-    favoriteChannels: "",
-    avoidChannels: "",
-    language: "English",
-    needsSubtitles: null,
-    hardwareConstraints: "",
-    motivation: null,
-    structurePreference: null,
-  },
-
-  setStep: (n) => set({ step: n }),
-
-  nextStep: () => {
-    set((state) => ({ step: Math.min(state.step + 1, 8) }));
-  },
-
-  prevStep: () => {
-    set((state) => ({ step: Math.max(state.step - 1, 1) }));
-  },
-
-  updateProfile: (key, value) =>
-    set((state) => ({
-      profile: { ...state.profile, [key]: value },
-    })),
-
-  finish: () => set({ submitted: true }),
-
-  reset: () =>
-    set({
+export const useProfileStore = create<ProfileState>()(
+  persist(
+    (set, get) => ({
       step: 1,
       submitted: false,
+
       profile: {
         topic: null,
         skillLevel: null,
@@ -84,5 +45,52 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
         motivation: null,
         structurePreference: null,
       },
+
+      setStep: (n) => set({ step: n }),
+
+      nextStep: () => {
+        set((state) => ({ step: Math.min(state.step + 1, 8) }));
+      },
+
+      prevStep: () => {
+        set((state) => ({ step: Math.max(state.step - 1, 1) }));
+      },
+
+      updateProfile: (key, value) =>
+        set((state) => ({
+          profile: { ...state.profile, [key]: value },
+        })),
+
+      finish: () => set({ submitted: true }),
+
+      reset: () =>
+        set({
+          step: 1,
+          submitted: false,
+          profile: {
+            topic: null,
+            skillLevel: null,
+            goalType: null,
+            goalDetail: "",
+            hoursPerDay: null,
+            daysPerWeek: null,
+            durationPreference: "",
+            learningStyle: null,
+            videoLength: null,
+            wantsQuizzes: null,
+            wantsProjects: null,
+            favoriteChannels: "",
+            avoidChannels: "",
+            language: "English",
+            needsSubtitles: null,
+            hardwareConstraints: "",
+            motivation: null,
+            structurePreference: null,
+          },
+        }),
     }),
-}));
+    {
+      name: "leetai-profile-store",
+    }
+  )
+);
