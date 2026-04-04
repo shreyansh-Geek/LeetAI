@@ -47,11 +47,14 @@ export function LoadingState() {
 
   // animate progress continuously inside step range
   useEffect(() => {
-    const [min, max] = progressRanges[status] || [0, 0];
+    // If status is still "loading" globally but we expect "planning" as first SSE payload, default to generic loading index 0.
+    const curKey = status === "loading" ? "planning" : status;
+    const [min, max] = progressRanges[curKey] || [0, 0];
 
     const interval = setInterval(() => {
       setSmooth((p) => {
-        if (p < max) return p + 0.4; // smooth movement
+        if (p < min) return min;
+        if (p < max) return p + 0.5; // smooth movement
         return p; // stop at step ceiling
       });
     }, 60);
