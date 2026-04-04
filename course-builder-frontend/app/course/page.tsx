@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCourseBuildStore } from "./store/useCourseBuildStore";
 import { CourseLayout } from "./components/CourseLayout";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 export default function CoursePage() {
+  useRequireAuth();
   const router = useRouter();
   const { status } = useCourseBuildStore();
 
