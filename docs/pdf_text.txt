@@ -1,0 +1,2591 @@
+
+--- Page 1 ---
+CHAPTER 1 
+PROBLEM DOMAIN DESCRIPTION 
+_____________________________________________________________________ 
+1.1 Introduction 
+In the last decade, the way people learn has undergone a massive transformation. Instead 
+of relying only on physical classrooms and fixed textbooks, learners now have access 
+to thousands of online videos, articles, blogs, MOOCs, coding platforms, and interactive 
+tutorials. Platforms such as YouTube, Coursera, Udemy, and free learning websites have 
+made high-quality education accessible to anyone with an internet connection. 
+However, this abundance of content has introduced a new challenge: information 
+overload. A learner searching for “Machine Learning from scratch” or “Web 
+Development roadmap” is suddenly confronted with hundreds of playlists, tutorials, and 
+blogs. Each creator presents content in a different order, depth and style. Learners are 
+left confused: 
+• Which course or video should I follow? 
+• What should I learn first and what can be skipped? 
+• How much time will it take to reach my goal? 
+• Is this resource updated and reliable? 
+At the same time, Generative AI (GenAI) and Large Language Models (LLMs) such 
+as GPT, LLaMA, and Mistral have shown powerful capabilities in understanding natural 
+language, answering questions, generating explanations, and even creating personalized 
+content. This opens up a unique opportunity: instead of learners manually sear ching, 
+filtering and structuring content, an intelligent GenAI system can automatically build 
+a complete course roadmap tailored to their goals and level, and it can also act as a 
+personal tutor that helps them throughout their learning journey. 
+This project, titled “GenAI-Powered Intelligent Course Builder and Personalized 
+Tutor”, attempts to solve that gap by combining automatic course generation , 
+resource ranking, and a RAG-based AI tutor into a single integrated system. 
+ 
+1.2 Background of Online Learning and GenAI 
+1.2.1 Evolution of Online Learning 
+The journey of online learning started with simple video lectures and PDFs, but has 
+evolved into interactive platforms that support: 
+1
+--- Page 2 ---
+• Recorded video lectures (YouTube, MOOCs) 
+• Live classes and webinars 
+• Discussion forums and Q&A communities 
+• Quizzes, coding problems, and assignments 
+• Certificates and specialization tracks 
+Despite all this progress, most platforms still rely on fixed, pre -designed courses  
+created manually by instructors. These courses: 
+• Target a broad audience, not one specific learner 
+• Follow a generic sequence (beginner–intermediate–advanced) 
+• Do not fully adapt to a learner’s time constraints, prior knowledge, or specific 
+career goals 
+Learners often have to mix and match multiple courses, blogs, and videos to create their 
+own learning path — which is time-consuming and confusing. 
+1.2.2 Rise of Generative AI in Education 
+Generative AI models can: 
+• Understand complex natural language prompts 
+• Generate explanations, summaries, notes and questions 
+• Adapt language, difficulty and examples based on the user 
+• Provide conversational, step-by-step guidance 
+In education, this means: 
+• A learner can describe a goal (e.g., “I want to become a Data Analyst in 3 months 
+with 1.5 hours per day”) 
+• The system can translate this goal into an actionable learning roadmap 
+• The system can continuously support the learner through doubts, clarification, 
+and revision material 
+When combined with real web and YouTube content, GenAI can act as a layer that: 
+1. Understands the learner 
+2. Searches and filters resources 
+3. Structures them into a course 
+2
+--- Page 3 ---
+4. Teaches and tutors along the way 
+This is exactly the problem domain where the proposed system fits. 
+ 
+1.3 Problem Statement 
+While abundant learning resources are available online, most learners lack a 
+personalized, structured, and guided pathway. The key issues are: 
+• Unstructured content discovery 
+Learners spend more time searching and bookmarking videos than actually 
+studying. 
+• No personalized course building 
+Resources are not organized into a coherent week-wise roadmap aligned with an 
+individual’s time availability and goal. 
+• Difficulty in judging quality and relevance 
+Metrics like views or likes on YouTube do not directly translate to how useful 
+the content is for a specific learner’s context. 
+• Lack of integrated tutoring support 
+Even after selecting materials, learners often struggle with doubts and 
+conceptual gaps. They need a tutor who understands what they are studying and 
+can answer context-aware questions. 
+• Static courses vs dynamic needs 
+Career roles and technologies evolve rapidly, but many courses become 
+outdated or rigid. 
+Formally, the problem can be stated as: 
+There is no unified system that can automatically generate a personalized, time-bound, 
+and goal -oriented course roadmap  by intelligently selecting and ranking online 
+resources (e.g., YouTube videos, blogs, articles) and simultaneously provide a context-
+aware AI tutor that uses the same curated content to assist the learner. This project aims 
+to address this problem through a GenAI-powered intelligent course builder and tutor. 
+1.4 Aim of the Project 
+The primary aim of this project is: 
+To design and implement a GenAI-powered intelligent course builder and 
+personalized tutor that can automatically generate multi-week learning 
+3
+--- Page 4 ---
+roadmaps from online resources and provide interactive, context-aware doubt 
+resolution to learners. 
+In simpler terms: 
+• The system should behave like a personal curriculum designer, creating a 
+course for the learner based on their goals. 
+• The system should also behave like a personal tutor, capable of solving doubts 
+using the course content. 
+ 
+1.5 Objectives of the Project (Domain-Level) 
+Within this problem domain, the project has the following key objectives: 
+1. Conversational Requirement Gathering 
+o Allow the learner to express their goals in natural language. 
+o Ask intelligent follow-up questions about time availability, prior 
+knowledge, target role (e.g., “ML Engineer”, “Web Developer”), and 
+learning preferences. 
+2. Automatic Resource Discovery 
+o Integrate with YouTube Data API to fetch relevant videos for the topic. 
+o Optionally scrape or retrieve high-quality web articles and blogs. 
+3. Intelligent Resource Ranking 
+o Rank resources using a combination of: 
+▪ Semantic similarity with the learner’s goal (using embeddings) 
+▪ Engagement metrics (views, likes, comments) 
+▪ Recency and channel reputation 
+o Optionally, apply LLM-assisted re-ranking. 
+4. Personalized Course Structuring 
+o Split the learning path into weeks/modules, respecting: 
+▪ Total duration (e.g., 4 weeks, 8 weeks) 
+▪ Daily/weekly available hours 
+o Estimate time per module and per resource. 
+4
+--- Page 5 ---
+5. Generation of Learning Material 
+o Use GenAI to create: 
+▪ Concise notes 
+▪ Summaries of videos/resources 
+▪ Flashcards for quick revision 
+▪ Quizzes and assignments to test understanding 
+6. RAG-Based Personalized Tutor 
+o Store processed course materials in a Vector Database 
+(Qdrant/Chroma). 
+o Use Retrieval-Augmented Generation (RAG) to answer user doubts 
+using only the curated course content. 
+o Provide conversational, context-aware explanations. 
+7. User-Friendly Web Interface 
+o Implement frontend using Next.js and Tailwind CSS. 
+o Implement backend using FastAPI, exposing REST APIs. 
+o Provide an intuitive course panel similar to popular e-learning platforms. 
+ 
+1.6 Scope of the Project 
+The scope defines what the system will cover within this project: 
+1.6.1 In-Scope Features (MVP) 
+• Natural language input for user goals and topics. 
+• Automatic follow-up question generation to refine learner profile. 
+• YouTube resource fetching using YouTube Data API. 
+• Resource ranking based on: 
+o Semantic similarity 
+o Engagement metrics 
+o Recency 
+• Course plan generation: 
+5
+--- Page 6 ---
+o Week-wise/module-wise structure 
+o Estimated time per module 
+• Generation of: 
+o Module-level notes 
+o Summaries of key resources 
+o Basic quizzes or MCQs 
+• RAG-based AI tutor: 
+o Use of Vector DB for storing embeddings of notes, summaries, and 
+transcripts. 
+o Retrieval of relevant chunks during Q&A. 
+• Web-based interface: 
+o Chat interface for course building and tutoring. 
+o Course dashboard showing modules, videos, notes, and quizzes. 
+1.6.2 Out-of-Scope (for this Minor Project) 
+• Full-scale mobile application (Android/iOS). 
+• Official course certification and integration with external LMS platforms. 
+• Complex analytics dashboards (advanced tracking of learner behavior). 
+• Multi-language support and advanced accessibility features (can be future 
+work). 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6
+--- Page 7 ---
+1.7 Problem Domain Diagram and Conceptual View 
+To better understand the domain, we can visualize the system at a high level. 
+1.7.1 High-Level Concept Diagram 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+\ 
+Fig 1.1: Conceptual View of GenAI Course Builder and Tutor 
+This diagram captures the core elements of the problem domain: 
+• A learner with a goal and constraints 
+• An intelligent AI-driven backend that: 
+o Understands the learner 
+o Connects to external resources 
+o Stores and structures knowledge 
+7
+--- Page 8 ---
+o Acts as a tutor 
+ 
+1.8 Example Use Case in the Problem Domain 
+Consider a B.Tech student in 5th semester, AIML branch, who wants to learn “Deep 
+Learning for Computer Vision” in 6 weeks, with 1.5 hours per day. 
+Without this system: 
+• The student manually searches YouTube and Google. 
+• They watch half of one playlist, then switch to another. 
+• They are unsure which topics to cover for CV-specific roles. 
+• Doubts pile up, and they look for separate resources for each doubt. 
+With the GenAI-Powered Intelligent Course Builder and Personalized Tutor: 
+1. The student types: 
+“I want to learn Deep Learning for Computer Vision in 6 weeks. I know basic 
+Python and linear algebra.” 
+2. The system asks follow-up questions: 
+o Do you want to focus more on theory, coding, or projects? 
+o How many hours per week can you dedicate? 
+o Are you comfortable with basic neural networks? 
+3. Based on the answers, the system: 
+o Fetches relevant YouTube playlists and tutorials. 
+o Ranks them using semantic relevance and popularity. 
+o Builds a 6-week roadmap with: 
+▪ Week 1: Basics of Neural Networks 
+▪ Week 2: CNN Fundamentals 
+▪ Week 3: Advanced CNN Architectures 
+▪ Week 4: Transfer Learning 
+▪ Week 5: Object Detection 
+▪ Week 6: Final Project & Deployment 
+8
+--- Page 9 ---
+4. The system generates notes and quizzes for each week. 
+5. When the student asks, “What is the difference between CNN and fully connected 
+networks in terms of parameters?” , the RAG tutor responds using the curated 
+content and notes — giving a context-aware, accurate explanation. 
+This example clearly demonstrates the problem domain and how the proposed solution 
+fits into it. 
+ 
+1.9 Summary 
+In this chapter, we explored the problem domain for the project “GenAI-Powered 
+Intelligent Course Builder and Personalized Tutor.” We began by understanding the 
+explosion of online educational content and the resulting issues of information overload, 
+lack of structure, and limited personalization. We then highlighted how Generative AI 
+and LLMs create an opportunity to automate course  building and provide intelligent 
+tutoring. 
+We formally stated the problem as the lack of a unified system that can generate 
+personalized learning roadmaps from online resources and tutor the learner using 
+those resources. The chapter described the aim, objectives, and scope of the project, 
+along with a conceptual diagram and a practical example that contextualizes how the 
+system will be used by a typical learner. 
+This sets the foundation for the next chapter, “Literature Survey”, where we will study 
+existing e-learning platforms, recommendation systems, GenAI -based tutoring tools, 
+and identify the research and industrial gap that our project intends to fill. 
+ 
+ 
+ 
+ 
+   
+9
+--- Page 10 ---
+CHAPTER 2 
+LITERATURE SURVEY 
+2.1 Introduction 
+A literature survey provides a systematic study of existing research, tools, 
+methodologies, and technologies relevant to the domain of AI-driven course 
+generation, personalized learning, recommendation systems, GenAI tutoring 
+models, and content retrieval systems . 
+This chapter presents an in-depth review of the evolution of digital learning platforms, 
+the shift toward intelligent recommendation systems, and recent breakthroughs in 
+Generative AI (GenAI) and Retrieval-Augmented Generation (RAG) that form the 
+backbone of the proposed system “GenAI-Powered Intelligent Course Builder & 
+Personalized Tutor.” 
+The chapter also establishes the research gap that motivates this project, supported by 
+factual elements from the Product Requirements Document and formatting standards 
+from the LNCT Minor Project template . 
+ 
+2.2 Evolution of Digital Learning Systems 
+2.2.1 Traditional E-Learning Platforms 
+Early digital learning platforms like Coursera, Udemy, edX, and Khan Academy 
+revolutionized online education by offering structured courses created by subject 
+experts. 
+However, they suffer from several limitations: 
+• Courses are static, created once and reused. 
+• Learners cannot customize pace, prerequisites, or the depth of topics. 
+• No dynamic integration of the latest online content. 
+• Limited personalization—recommendations are based on generic patterns, not 
+contextual needs. 
+These limitations directly correspond to the problem statement of the PRD, which 
+states that learners struggle with “navigating the vast and unstructured volume of 
+educational content” and often face “inefficiency, confusion, and lack of guidance” . 
+ 
+2.3 Intelligent Recommendation Systems in Learning 
+10
+--- Page 11 ---
+2.3.1 Content-Based Recommendation Systems 
+Content-based learning platforms analyze metadata such as: 
+• Topic keywords 
+• Learning preferences 
+• Prior watched content 
+• Video descriptions and tags 
+However, these systems provide only surface-level personalization. They lack the 
+capability to: 
+✔ Understand learner goals conversationally 
+✔ Generate structured learning plans 
+✔ Summarize or synthesize learning material 
+These gaps highlight the need for advanced AI-driven resource selection. 
+ 
+2.3.2 Collaborative Filtering Approaches 
+Collaborative filtering recommends resources based on patterns among similar 
+learners. 
+Drawbacks include: 
+• Cold start problem 
+• No real-time adaptability 
+• No semantic understanding of content 
+While effective for entertainment platforms (e.g., Netflix), it is insufficient for skill-
+based learning, where contextual understanding is essential. 
+ 
+2.3.3 Semantic Ranking & AI-Powered Resource Discovery 
+The PRD emphasizes using semantic similarity, recency, engagement metrics, and 
+channel reputation to rank YouTube resources . 
+Modern NLP models allow: 
+• Embedding-based similarity search 
+• Topic relevance estimation 
+• Quality scoring using metadata 
+11
+--- Page 12 ---
+This offers significant improvements over traditional keyword-based search. 
+ 
+2.4 Generative AI in Course Creation 
+The rise of LLMs (GPT-4/5, LLaMA, Mistral, Groq) has enabled machines not only 
+to fetch content but to: 
+• Generate structured weekly roadmaps 
+• Create quizzes and flashcards 
+• Produce summaries 
+• Identify prerequisite knowledge 
+These capabilities align with the PRD features of generating “notes, flashcards, 
+quizzes and assignments” and a “weekly roadmap” using LLM-based orchestration 
+chains . 
+ 
+2.4.1 Conversational Requirement Gathering 
+Research in conversational AI shows that chat-based systems provide: 
+✔ Higher clarity of user learning goals 
+✔ Reduced friction in onboarding 
+✔ Adaptive questioning mechanisms 
+Our system uses LLM-generated follow-up questions to extract missing details such 
+as learning goals, time availability, background knowledge, etc., as specified in the 
+PRD . 
+ 
+2.5 Retrieval-Augmented Generation (RAG) as a Tutor Engine 
+2.5.1 Limitations of Standard LLMs 
+Standard LLMs often hallucinate due to lack of knowledge grounding. They cannot 
+guarantee accuracy when answering questions about specific course content. 
+ 
+2.5.2 RAG-Based Tutoring 
+The RAG framework solves this by: 
+1. Retrieving relevant chunks from the curated course 
+12
+--- Page 13 ---
+2. Feeding them into the LLM 
+3. Generating precise, contextual answers 
+This approach is directly mentioned in the PRD as the basis of the AI Tutor Mode, 
+where responses are generated using embeddings stored in Qdrant/Chroma Vector 
+DB and used for answering student queries accurately . 
+ 
+Figure 2.1: Basic RAG Workflow 
+            
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2.6 YouTube-Based Learning Resource Discovery 
+YouTube is one of the world's largest learning ecosystems, containing: 
+• 80M+ educational videos 
+• Thousands of channels dedicated to structured tutorials 
+• High-engagement technical content 
+13
+--- Page 14 ---
+The PRD specifies YouTube Data API integration for fetching top-performing 
+educational videos . 
+Modern research suggests ranking videos based on: 
+1. Semantic similarity using embeddings 
+2. Engagement (likes, comments, views) 
+3. Channel authority 
+4. Recency of upload 
+5. Transcript quality 
+The project adopts these industry-standard ranking strategies to ensure curated, high-
+quality learning material. 
+ 
+Table 2.1 Comparison of Resource Ranking Metrics 
+Metric Advantage Relevance to Project 
+Semantic Similarity Ensures topic alignment Used for primary ranking 
+Engagement Score Reflects video 
+usefulness 
+Included as a secondary metric 
+Recency Ensures updated content Mentioned as a ranking 
+parameter 
+Channel 
+Reputation 
+Indicates credibility Used for bias correction 
+Metadata Analysis Additional filtering Used during YouTube API fetch 
+ 
+2.7 Course Structuring Approaches in Prior Research 
+Earlier works on adaptive learning systems used: 
+2.7.1 Static Roadmap Generation 
+Used predefined difficulty levels but lacked personalization. 
+2.7.2 Knowledge Graph-Based Structuring 
+Graph-based systems provided conceptual linking but required extensive manual 
+modeling. 
+14
+--- Page 15 ---
+2.7.3 GenAI-Based Dynamic Structuring 
+Modern LLMs can generate: 
+✔ Adaptive module breakdown 
+✔ Weekly time-based planning 
+✔ Difficulty progression 
+✔ Module summaries 
+This directly aligns with the PRD requirement of “weekly roadmap generation and 
+module formation” using GenAI orchestration chains . 
+ 
+2.8 System Architecture & Technologies Used in Past Studies 
+Most modern AI learning systems follow a modular architecture involving: 
+• Frontend: React/Next.js-based interfaces 
+• Backend: FastAPI, Node.js, Django 
+• LLM Layer: GPT, LLaMA, Mistral, Groq 
+• Database: MongoDB, PostgreSQL 
+• Vector DB: Pinecone, Qdrant, Chroma 
+Our architecture (Next.js, FastAPI, MongoDB Atlas, Chroma/Qdrant) is consistent 
+with contemporary industry practices and validated through the PRD's high-level 
+architecture diagram . 
+ 
+2.9 Research Gap Identified 
+Based on the reviewed literature, existing systems fail to provide: 
+  Completely personalized course creation 
+  Semantic ranking with real-time video discovery 
+  Integrated notes, quizzes, flashcards 
+  RAG-based tutoring from the curated material 
+  Conversational requirement extraction 
+Thus, the proposed project fills the gap by integrating resource discovery, GenAI 
+orchestration, course structuring, and RAG tutoring into one unified system. 
+ 
+15
+--- Page 16 ---
+2.10 Summary 
+This literature survey highlights the transition from traditional online courses to 
+intelligent, AI-driven personalized learning platforms. Existing systems either lack deep 
+personalization, structured course generation, adaptive tutoring, or efficient res ource 
+ranking. 
+The unique combination of: 
+• Conversational requirement gathering 
+• YouTube API–driven resource discovery 
+• Semantic ranking algorithms 
+• LLM-based course structuring 
+• RAG-backed tutoring engine 
+—makes this project significantly more advanced than existing solutions. 
+This chapter establishes the academic and technological foundation required to justify 
+the novelty and importance of the proposed GenAI-Powered Intelligent Course 
+Builder & Personalized Tutor. 
+ 
+16
+--- Page 17 ---
+CHAPTER 3 
+MAJOR OBJECTIVE & SCOPE OF PROJECT 
+_____________________________________________________________________ 
+3.1 Introduction 
+The rapid expansion of online educational content—especially on YouTube, blogs, and 
+open educational repositories—has created an ecosystem rich in information but poor 
+in structure. While millions of videos and articles exist for every possible skill, learners 
+continue to struggle with what to study, in what order, and how to connect their prior 
+knowledge with new material . Platforms like Coursera or Udemy offer structured 
+courses, but they remain static, non-personalized, and expensive. 
+The GenAI-Powered Intelligent Course Builder & Personalized Tutor addresses this 
+gap by using advanced Generative AI, Retrieval -Augmented Generation (RAG), 
+embeddings, and dynamic content discovery to automatically design a multi-week 
+personalized learning roadmap tailored to individual learners. This chapter describes 
+the major objectives and the scope of the project in alignment with the LNCT project 
+format and the PRD requirements. 
+ 
+3.2 Major Objectives of the Project 
+The primary objective of this project is to build an AI-driven adaptive learning system 
+that can automatically understand the learner’s needs and generate a complete, 
+structured course along with tutoring assistance. The objectives are categorized below 
+for clarity. 
+ 
+Objective 1: Automated Conversational Requirement Gathering 
+The system should interact with the learner using a natural, chat-based interface to 
+collect essential learning requirements. 
+Based on the PRD , this includes: 
+• Understanding the learner’s goals, background knowledge, and expected 
+timeline. 
+• Asking AI-generated follow-up questions to fill missing details. 
+• Building a User Learning Profile that will guide the entire course creation. 
+ 
+17
+--- Page 18 ---
+Objective 2: Intelligent Resource Discovery Using YouTube Data API 
+A key objective is to fetch relevant learning resources from YouTube and other open 
+sources: 
+• Integrate the YouTube Data API for video search. 
+• Extract metadata such as: 
+o Title, description 
+o Channel credibility 
+o View count, likes, engagement rate 
+o Upload date 
+• Expand resource discovery using curated blogs, articles, and web scraping. 
+This fulfills Section 5.2 of the PRD (Resource Discovery).  
+ 
+Objective 3: Multi-Stage Resource Ranking & Filtering 
+The system should rank resources through a combination of: 
+• Semantic similarity with user goals 
+• Engagement metrics (views, likes, retention) 
+• Recency of content 
+• LLM-based comparative ranking 
+This ranking pipeline ensures the system selects the top 10–20 high-value videos for 
+each module. 
+ 
+Objective 4: Automated Course Structuring & Weekly Roadmap Generation 
+Once resources are selected, the system should generate: 
+• A multi-week learning plan 
+• Organized modules and subtopics 
+• Estimated time duration 
+• Dependent learning sequences 
+• Adaptive course design based on: 
+18
+--- Page 19 ---
+o Available time per day 
+o Prior knowledge 
+o Complexity of the subject 
+This directly aligns with the PRD’s Course Structuring Component (Section 5.4).  
+ 
+Objective 5: Learning Material Generation (Notes, Quizzes, Flashcards, 
+Assignments) 
+The AI should convert long videos/articles into concise yet meaningful learning 
+materials using summarization and content transformation models: 
+• Module-wise Notes 
+• Concept-based Flashcards 
+• MCQ & subjective quizzes 
+• Assignments & mini-project suggestions 
+This achieves the PRD objective under Section 5.5.  
+ 
+Objective 6: Personalized GenAI Tutor using RAG 
+Another core objective is to act as a personal tutor, capable of answering questions 
+from the course content: 
+• Use embeddings (sentence-transformers) 
+• Store vectorized content in Chroma/Qdrant 
+• Retrieve relevant chunks during user queries 
+• Use LLM to provide accurate, contextual responses 
+This objective fulfills Section 5.7 (RAG Tutor Mode).  
+ 
+Objective 7: End-to-End System Implementation with Modern Web Architecture 
+Technical objectives include: 
+• Frontend: Next.js + TailwindCSS 
+• Backend: FastAPI microservices 
+19
+--- Page 20 ---
+• Databases: 
+o MongoDB Atlas (course/user metadata) 
+o Vector DB (Qdrant/Chroma) 
+• Deployment: 
+o Vercel (frontend) 
+o Render (backend) 
+This aligns with System Architecture described in the PRD.  
+ 
+3.3 Scope of the Project 
+The scope defines what the system will do and what it will not do within the MVP 
+boundaries (as per PRD Section 9: Acceptance Criteria).  
+ 
+3.3.1 In-Scope Functional Features 
+The project includes the following functional capabilities: 
+ 
+1. Conversational Learning Requirement Collection 
+• Chat-based requirement intake 
+• Auto-generated follow-up questions 
+• User profile creation 
+ 
+2. Resource Discovery & Metadata Extraction 
+• YouTube API-based search 
+• Fetching top videos for required topics 
+• Article & web content scraping 
+• Metadata extraction (likes, views, duration, tags) 
+ 
+3. Intelligent Ranking Pipeline 
+• Semantic similarity scoring 
+20
+--- Page 21 ---
+• Vector embeddings 
+• Engagement-based ranking 
+• LLM-assisted tie-breaking 
+ 
+4. Course Generation 
+• Full course roadmap 
+• Week-wise study plan 
+• Module grouping 
+• Resource ordering 
+• Time allocation calculations 
+ 
+5. AI-Generated Learning Materials 
+• Summaries 
+• Notes 
+• Flashcards 
+• Quizzes 
+• Assignments 
+ 
+6. RAG-Based Tutor Module 
+• Context-aware answering 
+• Concept explanation 
+• Follow-up clarification 
+• Notes-based retrieval 
+ 
+7. UI/UX Components 
+• Chat interface 
+• Dynamic course panel (collapsible UI)
+ 
+21
+--- Page 22 ---
+3.3.2 Out-of-Scope Elements (For MVP) 
+To remain focused, certain advanced features are currently out of scope: 
+• Mobile application (future phase) 
+• Collaborative learning (groups/teams) 
+• Certification generation 
+• V oice-based conversational input 
+• Paid content integration 
+• Multi-language course generation (English-only for MVP) 
+These may appear in future enhancements as mentioned in PRD Section 6.  
+ 
+3.4 Diagram: Objective–Feature Mapping 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+22
+--- Page 23 ---
+3.5 Table: Scope Summary 
+Table 3.1: Scope Definition 
+Category Included (In-Scope) Excluded (Out-of-Scope) 
+Requirements Conversational collection V oice-based intake 
+Resources YouTube, blogs Paid course APIs 
+Summaries Notes, flashcards Auto captioning of long videos 
+UI Chat + course panel Mobile app 
+Backend FastAPI services Multi-user collaboration 
+AI Tutor RAG-based Emotion-aware tutoring 
+Deployment Vercel + Render On-premise deployment 
+ 
+3.6 Future Expansion Possibilities 
+Although not part of MVP, the scope can be expanded to include: 
+• Mobile app version 
+• Offline downloadable notes 
+• Real-time learning analytics 
+• Reinforcement Learning for adaptive curriculum 
+• Certification engine 
+• Classroom collaboration environments 
+ 
+3.7 Summary 
+This chapter defined the major objectives and scope of the GenAI-Powered Intelligent 
+Course Builder & Personalized Tutor . The project aims to provide a personalized 
+learning ecosystem built on modern AI pillars—Generative AI, RAG, embeddings, and 
+intelligent resource discovery. The objectives clearly highlight the system’s ability to 
+understand learner needs, curate structu red learning paths, and provide continuous 
+tutoring assistance. The scope outlines a balanced and achievable MVP: robust enough 
+to function as a real AI-powered course builder. 
+23
+--- Page 24 ---
+Comparison Between Existing Learning Platforms and the Proposed 
+GenAI-Powered Course Builder 
+Feature YouTube Udemy / 
+Coursera 
+ChatGPT / 
+LLM Tools 
+Proposed System 
+(LeetAI) 
+Personalization None Limited Basic text 
+suggestions 
+Fully 
+personalized 
+roadmap 
+Course 
+Generation 
+No Fixed 
+courses 
+Outline only Structured multi-
+module course 
+Content 
+Retrieval 
+Manual 
+search 
+Platform-
+restricted 
+Limited RAG-based 
+intelligent 
+retrieval 
+Video Ranking No ranking No ranking Not supported Multi-metric 
+ranking (clarity, 
+duration, 
+preference) 
+Preference 
+Matching 
+None Limited None Deep preference 
+profiling 
+Interactive 
+Follow-ups 
+No No Generic Adaptive follow-
+up questions 
+Module 
+Breakdown 
+None Predefined Unstructured AI-generated 
+modules with 
+objectives 
+Automation 
+Level 
+Manual Semi-
+manual 
+Partial End-to-end 
+automated course 
+builder 
+Tutor Support No Limited Yes Context-aware AI 
+tutor 
+Flexibility of 
+Resources 
+High but 
+unorganized 
+Medium High High + organized 
++ ranked 
+  
+24
+--- Page 25 ---
+CHAPTER 4 
+REQUIREMENT SPECIFICATION 
+ 
+4.1 Introduction 
+Requirement Specification serves as the foundation for designing and developing the 
+GenAI-Powered Intelligent Course Builder & Personalized Tutor. It outlines what 
+the system must do (functional requirements), how well it must perform (non-functional 
+requirements), and what technologies are needed to build it. This chapter bridges the 
+gap between problem understanding and system design, ensuring that the development 
+process remains structured, aligned with user needs, and compliant with engineering 
+standards. 
+Given that the proposed system involves LLMs, YouTube Data API integration, 
+content ranking pipelines, RAG -based tutoring modules, and a full -stack 
+deployment architecture, a clear requirement specification is essential for reliability, 
+maintainability, and future scalability. 
+ 
+4.2 Functional Requirements (FRs) 
+Functional Requirements define what the system should do, describing its core 
+features and operational behavior. 
+ 
+4.2.1 Conversational Requirements Gathering 
+The system must: 
+1. Allow users to enter a course topic using natural language. 
+2. Extract intent, constraints, desired difficulty level, duration, and prerequisites 
+using an LLM. 
+3. Validate inputs and generate a structured course requirement profile. 
+ 
+4.2.2 YouTube-Based Material Discovery 
+The system must: 
+1. Use the YouTube Data API to search for relevant educational videos. 
+2. Fetch metadata: 
+25
+--- Page 26 ---
+o Title, channel, published date 
+o View count, likes, comments 
+o Video length 
+3. Apply filters (duration, language, educational category). 
+4. Retrieve top N videos with high relevance. 
+ 
+4.2.3 Video Ranking Pipeline 
+The system must combine: 
+1. Semantic Similarity Scoring using embeddings (OpenAI/Google Vertex). 
+2. Engagement Metrics: likes, retention proxy, popularity. 
+3. Content Quality Score (length suitability, topic precision). 
+4. Generate final ranked list of Top 10 Learning Materials. 
+Fig 4.1 Video Ranking Pipeline 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+26
+--- Page 27 ---
+4.2.4 Course Generation Module 
+The system should: 
+1. Create Weekly Course Structures (Week 1–4 / Week 1–8). 
+2. Assign videos to appropriate week/topics. 
+3. Auto-generate: 
+o Notes 
+o Summaries 
+o Practice Questions 
+o Flashcards 
+o Quizzes (MCQs with answers) 
+4. Maintain academic correctness & structured flow. 
+ 
+4.2.5 Personalized RAG-Based Tutor 
+The system must: 
+1. Use a Vector Database (Qdrant / ChromaDB) to store content embeddings. 
+2. Retrieve relevant context during conversation. 
+3. Provide: 
+o Concept explanations 
+o Step-by-step solutions 
+o Personalized learning guidance 
+4. Support follow-up queries. 
+ 
+ 
+ 
+ 
+ 
+ 
+27
+--- Page 28 ---
+Fig 4.2 RAG Architecture 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4.2.6 Dashboard & Frontend Requirements 
+The system must: 
+1. Show weekly course modules. 
+2. Display ranked videos with metadata. 
+3. Allow user-tutor chat. 
+4. Provide notes, quizzes, flashcards. 
+5. Enable progress visualization. 
+ 
+4.2.7 Backend Requirements 
+Using FastAPI, the system must: 
+• Provide secure REST APIs. 
+• Handle LLM calls and embedding generation. 
+• Manage video search and ranking pipeline. 
+• Interface with Vector DB and MongoDB Atlas. 
+28
+--- Page 29 ---
+4.2.8 Authentication Requirements 
+The system must include: 
+• Secure login/signup 
+• JWT-based authentication 
+• Role: Student 
+ 
+4.3 Non-Functional Requirements (NFRs) 
+Non-functional requirements describe how well the system should perform. 
+ 
+4.3.1 Performance Requirements 
+NFR Description 
+Response Time System must respond to queries within ≤3 seconds (excluding 
+LLM latency). 
+Ranking 
+Pipeline 
+Must rank 50–100 videos in <8 seconds. 
+Tutor Response RAG responses must generate within 3–5 seconds. 
+Scalability Should support up to 5,000 concurrent users. 
+ 
+4.3.2 Reliability Requirements 
+• 99.5% uptime (Vercel + Render deployment). 
+• Auto-fallback if an external API fails. 
+ 
+4.3.3 Security Requirements 
+• HTTPS everywhere 
+• JWT Authentication 
+• Rate limiting for API misuse 
+• Encrypted user data 
+ 
+29
+--- Page 30 ---
+4.3.4 Usability Requirements 
+• Minimal UI complexity 
+• Mobile responsiveness 
+• Clear visual hierarchy 
+• Accessible fonts & contrast 
+ 
+4.3.5 Maintainability Requirements 
+• Modular architecture 
+• API versioning 
+• Log monitoring 
+• Easy LLM model swapping (OpenAI/Gemini) 
+ 
+4.3.6 Portability Requirements 
+• Cloud agnostic 
+• Browser independent 
+• Re-deployable through Docker 
+ 
+4.4 Hardware Requirements 
+Category Specification 
+Processor Intel i5 or above 
+RAM Minimum 8 GB 
+Storage 256 GB SSD 
+Internet 5–10 Mbps stable connection 
+GPU (Optional) For local embedding generation 
+ 
+4.5 Software Requirements 
+4.5.1 System Software 
+30
+--- Page 31 ---
+• Windows 10 / Ubuntu 22.04 
+• VS Code 
+• Docker (optional) 
+ 
+4.5.2 Application Software 
+Software Purpose 
+FastAPI Backend APIs 
+Next.js Frontend UI 
+MongoDB Atlas Course + user data 
+Qdrant / Chroma DB Vector storage 
+OpenAI/Gemini APIs LLM & embeddings 
+YouTube Data API Video search 
+Vercel Frontend deployment 
+Render Backend deployment 
+4.6 System Models / Diagrams 
+4.6.1 Use-Case Diagram 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+31
+--- Page 32 ---
+4.7 Summary 
+This chapter presented a detailed specification of the functional and non -functional 
+requirements for the GenAI -Powered Intelligent Course Builder and Personalized 
+Tutor. It captured everything from conversational input extraction to YouTube -based 
+video discovery, ranking pipelines, course structuring, RAG -based tutoring, 
+backend/frontend workflows, and deployment requirements. 
+Clear requirement definition ensures that the development process remains structured, 
+predictable, and aligned with user expectations. These specifications form the 
+foundation for the detailed design phase presented in the next chapter. 
+ 
+  
+32
+--- Page 33 ---
+CHAPTER 5 
+DETAILED DESIGN (MODELING AND ERD/DFD) 
+ 
+5.1 Introduction 
+The Detailed Design phase translates the system requirements into structured models 
+that provide a clear blueprint for implementation. It ensures that all system 
+components—data flow, user interactions, backend processing, and AI pipelines—are 
+systematically defined. 
+For the project “GenAI-Powered Intelligent Course Builder & Personalized 
+Tutor”, the design focuses on modeling: 
+• Conversational requirements gathering 
+• YouTube resource discovery pipeline 
+• Ranking and course-structuring engine 
+• RAG-based personalized tutor 
+• Data models for course, user, embeddings 
+• Overall system architecture coordinating FastAPI backend, Next.js frontend, 
+Vector DB, and MongoDB Atlas 
+This chapter presents the DFD (Level 0, 1, 2), ER Diagram, Use-Case Diagram, 
+Sequence Diagrams, and Component Diagram required in LNCT Minor Project 
+reports . 
+ 
+5.2 System Architecture Overview 
+To maintain alignment with the PRD, the architecture integrates: 
+Layer Components Description 
+Frontend Next.js, TailwindCSS Chat interface, course panel, real-time 
+progress updates 
+Backend FastAPI Orchestrator Requirements capture, resource 
+fetching, ranking, course generation 
+AI Layer LLaMA/Mistral/Groq, 
+LangChain 
+Embedding, ranking, summarization, 
+quiz generation, RAG tutor 
+33
+--- Page 34 ---
+Databases MongoDB Atlas, 
+Qdrant/Chroma 
+Structured course data + vector 
+embeddings 
+External 
+APIs 
+YouTube Data API Fetches video metadata, tags, 
+engagement metrics 
+Deployment Vercel, Render Scalable cloud deployment 
+ 
+5.3 Context-Level DFD (Level 0) 
+Fig 5.1 Data Flow Diagram – Level 0 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Explanation: 
+The user interacts with the system through prompts. The system processes them and 
+produces structured courses or AI tutor responses. 
+ 
+  
+34
+--- Page 35 ---
+5.4 DFD Level 1 — Subsystem Decomposition 
+Fig 5.2 Level 1 DFD 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+5.5 DFD Level 2 — Detailed Process Flows 
+5.5.1 Resource Ranking Pipeline (from PRD) 
+Fig 5.3 Ranking Pipeline – Level 2 
+  
+35
+--- Page 36 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+5.6 ER Diagram (Entity–Relationship Model) 
+Fig 5.4 ERD of the Proposed System 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+36
+--- Page 37 ---
+Additional entities: 
+• embeddings (stored in Vector DB – Qdrant/Chroma) 
+• quiz_questions (LLM-generated) 
+• notes (summaries & flashcards) 
+ 
+5.7 Use Case Diagram 
+Fig 5.5 Use Case Diagram 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+5.8 Sequence Diagram — Course Generation Flow 
+Fig 5.6 Sequence Diagram 
+User → Frontend : Enter prompt 
+Frontend → Backend : Send user prompt 
+Backend → AI Layer : Generate follow-up prompts 
+AI Layer → Backend : User profile JSON 
+Backend → YouTube API : Fetch videos 
+YouTube API → Backend : Metadata 
+Backend → AI Layer : Ranking + summarization 
+AI Layer → Backend : Module-wise structured course 
+Backend → Database : Save course 
+Backend → Frontend : Return course panel data 
+37
+--- Page 38 ---
+Frontend → User : Display final course 
+ 
+5.9 Sequence Diagram — RAG Tutor Query 
+Fig 5.7 
+User → Frontend : Ask question 
+Frontend → Backend : Send query 
+Backend → Vector DB : Search relevant chunks 
+Vector DB → Backend : Top-k embeddings 
+Backend → AI Model : Provide context + question 
+AI Model → Backend : Context-grounded answer 
+Backend → Frontend : Response 
+Frontend → User : Display answer 
+ 
+5.10 Component Diagram 
+Fig 5.8 Component Diagram 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+38
+--- Page 39 ---
+5.11 Summary 
+The Detailed Design chapter establishes a complete blueprint for the implementation of 
+the GenAI-Powered Intelligent Course Builder & Personalized Tutor System . 
+Using DFDs, ERDs, UML diagrams, and architectural models, the system is 
+decomposed into logical modules aligned with PRD specifications and the LNCT Minor 
+Project format . 
+This design ensures: 
+• Efficient conversational requirement gathering 
+• Accurate and scalable resource discovery 
+• Intelligent video ranking pipeline 
+• Well-structured weekly course planning 
+• Robust RAG-based personalized tutoring 
+• Clean integration of frontend, backend, AI layer, and databases 
+The models created here form the foundational reference for coding, testing, and 
+deployment phases. 
+ 
+ 
+ 
+39
+--- Page 40 ---
+CHAPTER 6 
+HARDWARE AND SOFTWARE REQUIREMENTS 
+ 
+6.1 Introduction 
+The successful development and deployment of the project “GenAI-Powered Intelligent 
+Course Builder and Personalized Tutor” relies on a carefully selected combination of 
+hardware and software resources. As the system integrates advanced components such 
+as LLM-powered content generation , YouTube Data API integration , semantic 
+ranking pipelines , RAG-based AI tutoring , and cloud-based deployment , the 
+underlying infrastructure must ensure speed, reliability, scalability, and security. 
+This chapter describes the complete hardware and software requirements necessary for 
+building, testing, and deploying the system. It covers both development environment 
+requirements and production deployment requirements, adhering to the standards 
+expected for a modern AI-driven web application. 
+ 
+6.2 Hardware Requirements 
+The hardware requirements are divided into two parts: 
+1. Development Environment (for student developers) 
+2. Deployment/Production Environment (cloud-hosted architecture) 
+ 
+6.2.1 Minimum Hardware Requirements for Development 
+Component Specification 
+Processor Intel i5 (8th gen or higher) / AMD Ryzen 5 
+RAM 8 GB (minimum) 
+Storage 120 GB SSD minimum 
+GPU Optional, but useful for local model testing 
+Internet Stable broadband (10–20 Mbps minimum) 
+A basic development configuration is sufficient because heavy AI computations (LLM 
+inference, embedding generation, RAG queries) are performed through cloud APIs 
+such as OpenAI and vector DB providers. 
+40
+--- Page 41 ---
+6.2.2 Recommended Hardware Requirements 
+Component Specification 
+Processor Intel i7 / Ryzen 7 or above 
+RAM 16 GB DDR4 or DDR5 
+Storage 256 GB SSD 
+GPU NVIDIA GTX 1650 / RTX series (optional) 
+Internet 30+ Mbps high-speed connection 
+A higher-end configuration improves local testing speed, container (Docker) 
+performance, and frontend build times. 
+ 
+6.2.3 Cloud Infrastructure Requirements (Production Deployment) 
+The system is deployed across multiple cloud components: 
+1. Frontend Hosting (Vercel) 
+Used for deploying the Next.js frontend. 
+• Auto-scaling architecture 
+• CDN-backed global delivery 
+• SSL/TLS enabled 
+• No dedicated hardware required by developers 
+2. Backend Hosting (Render / Railway / AWS EC2) 
+The backend API built on FastAPI is deployed on a lightweight cloud server. 
+Parameter Specification 
+CPU 1 vCPU 
+RAM 512 MB – 1 GB 
+Bandwidth ~100 GB/mo 
+Storage 2–5 GB 
+This configuration is enough because heavy computation is outsourced to OpenAI 
+API + Vector Database. 
+ 
+41
+--- Page 42 ---
+3. Vector Database (Qdrant / Chroma Cloud) 
+Used for storing embeddings for RAG-based AI tutoring. 
+Feature Required Configuration 
+Storage 1–2 GB (for embeddings) 
+RAM 1 GB 
+Indexing HNSW Graph Index 
+Replication Optional 
+4. MongoDB Atlas Cluster 
+Stores user profiles, generated courses, notes, quizzes, flashcards, and logs. 
+Specification Value 
+Cluster Tier M0 (Free) / M2+ 
+Storage 512 MB – 2 GB 
+Backup Daily snapshots 
+Security IP whitelisting, TLS encryption 
+ 
+6.3 Software Requirements 
+Software requirements cover OS, development tools, backend technologies, frontend 
+technologies, databases, APIs, and GenAI components. 
+ 
+6.3.1 Operating System Requirements 
+Device Supported OS 
+Developer Machine Windows 10/11, macOS Ventura+, Ubuntu 20.04+ 
+Server Deployment Linux (Ubuntu 22.04 recommended) 
+Linux is preferred for backend deployment due to stability, lower resource usage, and 
+compatibility with Python-based ecosystems. 
+ 
+ 
+ 
+42
+--- Page 43 ---
+6.4 Development Software Stack 
+The software components used in this project are chosen to support high modularity, 
+scalability, and AI integration capabilities. 
+6.4.1 Backend Technologies (FastAPI) 
+The backend is built using FastAPI due to: 
+• High performance (based on ASGI & Uvicorn) 
+• Native support for async operations 
+• Auto-generated Swagger documentation 
+• Flexible integration with AI APIs & vector DBs 
+Backend Modules include: 
+• Course generation controller 
+• YouTube Data API integration service 
+• Ranking engine (semantic + engagement metrics) 
+• Notes and quiz generation service 
+• AI Tutor (RAG pipeline) 
+• Authentication & session management 
+ 
+6.4.2 Frontend Technologies (Next.js, TailwindCSS) 
+The frontend is implemented in Next.js 14 (App Router) to ensure: 
+• Server-side rendering (SSR) 
+• Static site generation (SSG) 
+• React-based component architecture 
+• Fast rendering and SEO optimization 
+Other frontend libraries: 
+• Tailwind CSS → For modern UI styling 
+• React Query / SWR → For API state management 
+• ShadCN/UI → For component styling 
+• Chart.js → For visual progress tracking 
+43
+--- Page 44 ---
+ 
+6.5 Database Requirements 
+6.5.1 MongoDB Atlas (Primary Database) 
+Used to store: 
+• User profiles 
+• Course structures 
+• Notes and quizzes 
+• Generated flashcards 
+• Dashboard progress data 
+It supports: 
+• Automatic scaling 
+• High availability 
+• Geo-distributed clusters 
+ 
+6.5.2 Vector Database for AI Tutor (Qdrant/Chroma) 
+The vector DB stores embeddings from lecture transcripts, notes, and user-uploaded 
+content. 
+Key features required: 
+• Approximate Nearest Neighbor (ANN) search 
+• HNSW indexing 
+• Fast querying for real-time tutoring 
+• Ability to store metadata 
+Fig 6.1 Vector Storage Architecture 
+ 
+ 
+ 
+ 
+ 
+44
+--- Page 45 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6.6 API Requirements 
+6.6.1 YouTube Data API (v3) 
+Used to fetch: 
+• Top-rated educational videos 
+• Channel statistics 
+• Video engagement metrics (likes, views, CTR) 
+This supports the course-building module. 
+ 
+6.6.2 OpenAI API (GPT-4o / GPT-5 Models) 
+Required for: 
+• Requirement gathering conversation 
+• Weekly course structuring 
+• Notes, quiz, and flashcard generation 
+45
+--- Page 46 ---
+• Embedding generation for RAG 
+• Intelligent AI tutoring dialogue 
+ 
+6.7 Deployment Software Requirements 
+6.7.1 Vercel 
+For deploying Next.js frontend with: 
+• Auto-build pipelines 
+• GitHub integration 
+• Global CDN caching 
+• Automatic SSL 
+6.7.2 Render / Railway 
+For deploying FastAPI backend: 
+• Container-based deployment 
+• Horizontal auto-scaling 
+• Environment variable management 
+ 
+6.8 Tools & IDE Requirements 
+Tool Purpose 
+VS Code Main development IDE 
+Postman / Thunder Client API testing 
+Figma / Excalidraw UI design & diagrams 
+Git & GitHub Version control 
+Docker (optional) Containerized deployment testing 
+ 
+6.9 Security Requirements 
+The chosen software ecosystem must support the following: 
+• HTTPS/TLS encryption 
+46
+--- Page 47 ---
+• API key protection 
+• Role-based access (RBAC) 
+• CORS configuration 
+• Input validation (FastAPI Pydantic models) 
+Cloud databases like MongoDB Atlas provide additional security: 
+• IP whitelisting 
+• Encryption at rest 
+• Automatic backups 
+ 
+6.10 Summary 
+This chapter outlined the complete hardware and software requirements  for the 
+GenAI-powered Intelligent Course Builder and Personalized Tutor system. The solution 
+leverages modern AI technologies, cloud infrastructure, and lightweight yet powerful 
+frameworks such as FastAPI, Next.js, MongoDB Atlas , and Qdrant/Chroma. 
+The chosen hardware and software stack ensures that the system remains scalable, 
+efficient, secure, and easy to deploy , making it suitable for both academic research 
+and real-world usage. 
+ 
+  
+47
+--- Page 48 ---
+CHAPTER 7 
+SNAPSHOTS OF INPUT AND OUTPUT 
+____________________________________________________________ 
+This chapter presents the visual snapshots of the LeetAI – GenAI Course Architect, 
+demonstrating the sequence of user inputs, LLM -powered intelligent follow -ups, and 
+the structured outputs generated during the course -building workflow. Each interface 
+element shown in the snapshots reflects the system’s real -time reasoning capabilities, 
+dynamic question generation, and autonomous extraction of user preferences. 
+ 
+7.1 Initial Input Screen – Topic & Course Intent Capture 
+The first snapshot showcases the main onboarding screen, where the user enters: 
+• The Topic/Subject for which the course is to be built 
+• A short description of their objective 
+• Any additional context they want LeetAI to consider 
+Purpose: 
+This input allows the LLM to understand the high -level intent of the learner and begin 
+processing the topic domain. The interface displays a clean, neon -accented UI with a 
+central input panel, designed for clarity and minimal cognitive load. 
+System Behaviour: 
+As soon as the user submits information, LeetAI parses the text, extracts relevant 
+entities (e.g., topic, level, constraints), and prepares for deeper follow-ups if needed. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+48
+--- Page 49 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.2 First Intelligent Follow-Up Question 
+After observing the initial input, the LLM intelligently decides that more contextual 
+information is required to personalize the course. 
+The second snapshot displays: 
+• A generated follow-up question 
+• Options or input fields based on what the model inferred as missing 
+• A compact UI card prompting the user for clarification regarding goals, 
+timelines, and prior experience 
+Purpose: 
+This follow-up ensures the model collects critical details early, reducing ambiguity 
+during course generation. 
+System Behaviour: 
+The LLM performs reasoning and identifies missing parameters such as: 
+• Course duration 
+• Learning depth 
+• Learner background 
+• Learning goal (exam, interview, hobby, etc.) 
+ 
+ 
+49
+--- Page 50 ---
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+7.3 Intelligent Information Extraction – Personal & Learning Preferences 
+The next screenshot highlights how LeetAI automatically generates fields to capture 
+personal information and learning preferences, such as: 
+• Name 
+• Region 
+• Experience level 
+• Learning speed 
+• Preferred content type (videos, text, examples, etc.) 
+• Difficulty level 
+Purpose: 
+Capturing these elements enables the system to tailor the tone, examples, complexity, 
+and pacing of the final course roadmap. 
+System Behaviour: 
+The model actively recognizes missing preference categories and prompts the user 
+with structured forms. This dynamic behaviour simulates how a human tutor would 
+gather information before creating a personalized plan. 
+ 
+ 
+ 
+ 
+ 
+50
+--- Page 51 ---
+7.4 Additional Follow-Up Prompts When Data Is Insufficient 
+In the following snapshot, the LLM concludes that the previous inputs are not 
+adequate to generate a fully personalized roadmap. Therefore, it automatically asks 
+another question. 
+This screen includes: 
+• A follow-up question to further refine the learner’s profile 
+• Multiple-choice selection fields that adapt based on earlier answers 
+Purpose: 
+Shows how the system handles uncertainty and ensures course quality by gathering all 
+necessary parameters. 
+System Behaviour: 
+LeetAI evaluates the completeness of the dataset and triggers a new question if: 
+• User input has gaps 
+• Required preferences for course curation are missing 
+• Learning complexity parameters are unclear 
+This adaptive questioning improves precision in the generated output. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.5 Advanced Preference Capture – Learning Style & Medium 
+The next snapshot displays another refined follow-up prompt focused on: 
+51
+--- Page 52 ---
+• Preferred learning medium 
+• Time availability 
+• Motivation level 
+• Type of examples preferred (real-world, academic, coding-based, etc.) 
+Purpose: 
+These parameters directly influence the course structure, delivery format, and the type 
+of content the LLM prioritizes. 
+System Behaviour: 
+The LLM intelligently merges all earlier data with new inputs to produce a cohesive 
+learner profile.
+ 
+7.6 Complete Information Interpretation – Intelligent Processing 
+In the subsequent snapshot, LeetAI demonstrates its ability to interpret long, 
+descriptive inputs without needing multiple follow-ups. 
+The UI displays a large paragraph of user input being processed, and the system 
+produces a concise summary. 
+Purpose: 
+This screen proves the system’s capability to: 
+• Parse long inputs 
+• Extract structured information 
+• Reduce onboarding time 
+System Behaviour: 
+If a user provides complete details in one long prompt, the LLM skips all follow-ups 
+and proceeds directly to summarization. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+52
+--- Page 53 ---
+7.7 Structured Summary Output – Collated User Preferences 
+The next snapshot shows a neatly organized structured summary generated by 
+LeetAI. 
+This includes: 
+• Subject 
+• Goal 
+• Time Available 
+• Preferred Learning Style 
+• Experience Level 
+• Difficulty Preference 
+• Language 
+• Motivation 
+• Timetable suitability 
+Purpose: 
+Allows the user to verify all extracted preferences before the system starts building the 
+personalized roadmap. 
+System Behaviour: 
+The LLM transforms raw text inputs into standardized fields and displays them in a 
+professional format. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+53
+--- Page 54 ---
+7.8 Final Confirmation Popup 
+The next interface snapshot shows the Final Confirmation Popup, prompting the 
+user: 
+“Ready to Build Your Course?” 
+Purpose: 
+To ensure the user agrees with the processed data before course generation begins. 
+System Behaviour: 
+Upon confirmation, the pipeline activates the course-generation module, which uses 
+all captured parameters to create: 
+• A tailored roadmap 
+• Daily or weekly lesson structures 
+• Personalized study strategies 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.9 Zoomed-In Summary View 
+The final snapshot presents a zoomed and expanded version of the structured 
+preferences screen, enabling the user to cross-verify every minute detail. 
+This includes all refined inputs and extracted preferences, displayed in a clean tabular 
+layout. 
+54
+--- Page 55 ---
+Purpose: 
+Improves readability and transparency. 
+Provides a final review step before the course is built. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10 Additional Snapshots of Input–Output Flow 
+This subsection highlights further visual stages of the LeetAI Course Architect 
+workflow, showcasing how the system transitions from conversational 
+onboarding to the final course generation process. 
+ 
+7.10.1 System Initialization – “LeetAI is Thinking…” 
+The first snapshot displays the initial loading animation where LeetAI begins 
+processing the user’s message. 
+This indicates that the system is: 
+• Parsing the input 
+• Identifying the intent 
+• Preparing the first instructional response 
+This minimalistic loading screen enhances user experience by communicating 
+that the system is actively reasoning before responding. 
+ 
+ 
+55
+--- Page 56 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10.2 First Message – Welcoming Prompt 
+The next screen shows LeetAI’s introductory greeting, asking the user what skill 
+or topic they wish to learn. 
+This forms the starting point of the conversational onboarding journey and 
+encourages users to articulate their learning objective clearly. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10.3 User Goal Processing & Time Commitment Capture 
+Here, the user inputs a specific objective (“Advanced DSA… crack FAANG 
+interviews in 6 months”), after which the system responds with a tailored follow-
+up prompt asking for time availability. 
+56
+--- Page 57 ---
+The UI captures: 
+• Hours per day 
+• Days per week 
+• Preferred overall duration 
+This ensures the personalized roadmap aligns with realistic scheduling 
+constraints. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10.4 Learning Style & Personal Preferences Collection 
+This screen presents structured cards prompting the user for: 
+• Learning style (project-first, theory-first, balanced) 
+• Preferred video length 
+• Whether quizzes and mini-projects should be included 
+These inputs directly influence how the final roadmap is shaped, ensuring 
+alignment with the user's unique learning behavior. 
+ 
+ 
+ 
+ 
+ 
+ 
+57
+--- Page 58 ---
+7.10.5 YouTube Channel Preferences 
+The next snapshot shows a dedicated card for adding YouTube preferences. 
+Users may optionally specify: 
+• Preferred channels 
+• Channels they want to avoid 
+This helps the system recommend highly relevant tutorials while avoiding 
+formats the user dislikes or finds ineffective. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10.6 Full-Length User Input Interpretation 
+In this snapshot, the user enters a long, detailed prompt covering goals, 
+motivation, time availability, hardware constraints, and preferred channels. 
+LeetAI intelligently extracts structured values from this free-form input, 
+demonstrating its ability to: 
+• Summarize 
+• Categorize 
+• Normalize data 
+without additional follow-ups. 
+This results in a more seamless and efficient onboarding process. 
+ 
+58
+--- Page 59 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10.7 Final Confirmation Popup 
+Before generating the roadmap, LeetAI presents a confirmation dialog asking: 
+“Ready to Build Your Course?” 
+This allows the user to review their collected preferences and either proceed or 
+make adjustments. 
+It marks the transition from onboarding → course generation. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10.8 Dual-Pane Interface – Roadmap Display Area 
+After onboarding, the UI expands to a two-column layout: 
+• Left panel: Conversational inputs and summaries 
+• Right panel: Placeholder for the upcoming personalized roadmap 
+59
+--- Page 60 ---
+This clear separation enhances readability and keeps the user informed about the 
+next steps. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.10.9 Roadmap Generation Screen – Progress Indicator 
+The final snapshot shows the animated “Building Your Course…” stage. 
+The progress card highlights four phases of the backend pipeline: 
+1. Planning your roadmap 
+2. Fetching videos 
+3. Ranking & scoring 
+4. Finalizing course 
+This transparent breakdown helps users understand the internal operations of 
+the AI system and builds trust in the generation process. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+60
+--- Page 61 ---
+7.11 Output Snapshots of the Generated Personalized Course Roadmap 
+This section presents the final output generated by the LeetAI Course Architect after 
+completing the conversational onboarding and preference -capturing process. The 
+snapshots illustrate how the system translates user requirements, learning styles, 
+constraints, and goals into a fully structured, module -based personalized learning 
+roadmap. The generated interface is designed to be clean, intuitive, and aligned with 
+modern UI/UX standards, ensuring clarity and navigability for learners. 
+ 
+7.11.1 Overview Panel – Custom Course Roadmap 
+The first snapshot displays the main roadmap view, where the system provides a 
+high-level Course Summary describing: 
+• The learner’s background and motivation 
+• The expected duration of the course 
+• The structured learning strategy adopted 
+• How the roadmap was tailored to FAANG-level interview preparation 
+• The importance of progressing from fundamentals to advanced modules 
+This summary acts as a personalized introduction, grounding the learner in what to 
+expect from the curriculum and providing context for the module progression that 
+follows. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+61
+--- Page 62 ---
+The interface is divided into two primary sections: 
+• Left Sidebar: A structured list of all modules in the course 
+• Right Panel: Detailed explanation of the currently selected module 
+This layout helps maintain continuity in navigation, allowing the learner to move 
+seamlessly between modules. 
+ 
+7.11.2 Module Structure – Example: Module 0 & Module 1 
+Each module in the roadmap is designed with: 
+• A clear title and duration (e.g., 0.5 week, 1 week) 
+• Learning objectives describing what the learner should achieve 
+• A concise topic breakdown 
+• Curated video recommendations, each justified based on the user’s 
+preferences. 
+For example, in Module 0: Setup & Python Fundamentals, the AI selects videos 
+aligned with the user’s: 
+• Need for short, focused content 
+• Preference for structured explanations 
+• Motivation toward competitive programming setup 
+Similarly, Module 1: Introduction to DSA & Complexity Analysis integrates short, 
+visual-friendly videos tailored to the learner’s preference for: 
+• Beginner-friendly explanations 
+• Visual intuition and concise content 
+• Clear grounding in Big-O notation before advancing further 
+This demonstrates how the roadmap dynamically aligns with both learning goals and 
+preferred content type. 
+ 
+7.11.3 Intelligent Video Curation and “Why This Video?” Justifications 
+Each recommended video includes a brief rationale explaining why it was selected. 
+The system leverages user inputs such as: 
+62
+--- Page 63 ---
+• Preferred YouTube channels 
+• Channels to avoid 
+• Learning style (visual, project-first, or theory-first) 
+• Video length preference 
+• Motivation level 
+• Expected course duration 
+For example, a video may be selected because it: 
+• Matches the user’s preferred instructors 
+• Offers short, digestible explanations 
+• Provides step-by-step clarity suited for absolute beginners 
+• Reinforces problem-solving with practical examples 
+These micro-justifications enhance the transparency of the AI model’s decision-
+making process. 
+ 
+7.11.4 Complete Module Index – Full Roadmap Navigation 
+The left-side index showcases the complete learning journey, consisting of 15 
+sequential modules, covering: 
+• Python fundamentals 
+• Core DSA topics (arrays, strings, recursion, graphs, heaps, etc.) 
+• Advanced topics such as Dynamic Programming and Greedy Algorithms 
+• System Design (Basics and Components/Examples) 
+• LeetCode practice and problem-solving enhancements 
+This hierarchical structure ensures: 
+• Logical topic progression 
+• Balanced learning load per week 
+• Smooth transition from beginner → intermediate → advanced concepts 
+• Alignment with FAANG-style interview expectations 
+ 
+63
+--- Page 64 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.11.5 Expanded Module View – In-Depth Learning Breakdown 
+The final snapshot for Module 1 demonstrates how each module contains: 
+• A structured introduction 
+• Weekly goals 
+• Key concepts to master 
+• Recommended resources 
+• Content justification aligned with the learner’s inputs 
+This reinforces the personalized nature of the roadmap, offering a tightly curated and 
+goal-oriented experience. 
+ 
+7.11.6 Significance of the Generated Output 
+These output snapshots highlight the effectiveness of the system’s backend pipeline, 
+which includes: 
+• LLM-based reasoning to generate module descriptions 
+64
+--- Page 65 ---
+• Retriever + Reranker pipeline to match high-quality videos 
+• Preference-matching algorithms to ensure content aligns with user goals 
+• Structured formatting to produce a clean, readable roadmap 
+The final output is not just a list of resources but a complete, pedagogically 
+optimized, learner-specific curriculum. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7.12 Summary of Input–Output Workflow 
+The snapshots collectively illustrate the complete lifecycle of user interaction with the 
+GenAI Course Architect: 
+1. User inputs topic and initial goal 
+2. LLM processes text and identifies missing information 
+3. Dynamic follow-up questions are generated 
+4. User preferences and personal details are captured 
+5. LLM parses all inputs and builds a structured profile 
+6. A final confirmation popup appears 
+7. Customized course roadmap is generated 
+This Input–Output pipeline highlights the intelligence, adaptability, and user-centric 
+design of LeetAI. 
+65
+--- Page 66 ---
+CHAPTER 8 
+CODING & IMPLEMENTATION
+ 
+This chapter provides a detailed overview of the core coding components implemented 
+in our GenAI-Powered Course Builder & Personalized Tutor System. The module-
+wise explanation covers the backend architecture, business logic, YouTube data 
+pipeline, LLM prompt engineering, and the frontend integration using Next.js. Each 
+code segment reflects our practical development workflow and demonstrates how 
+different layers of the system interact to deliver an intelligent, automated, and 
+personalized learning experience. 
+Project Folder Structure Overview 
+To maintain clarity, scalability, and ease of development, the entire project was 
+organized into a well -structured directory system. Both the backend (FastAPI) and 
+frontend (Next.js) follow industry -standard architectural patterns, enabling modular 
+development and seamless integration across all system components. 
+ 
+• Backend Folder Structure (FastAPI) 
+The backend follows a service-oriented architecture , where each functionality is 
+separated into clearly defined modules. This ensures loose coupling, easier debugging, 
+and better maintainability. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+66
+--- Page 67 ---
+Key Features of Backend Structure: 
+➢ Separation of Concerns: Routes, logic, prompts, and utilities stored 
+independently. 
+➢ Reusability: Shared utilities minimize code duplication. 
+➢ Extensibility: New APIs or modules can be added without affecting existing 
+ones. 
+➢ Scalability: Follows microservice-ready patterns suitable for production 
+environments. 
+8.x Frontend Folder Structure (Next.js 13) 
+➢ The frontend uses Next.js App Router architecture, offering better server-side 
+rendering (SSR), routing, and performance optimization. The structure ensures 
+clean component management and modular UI development. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+67
+--- Page 68 ---
+Features Key of Frontend Structure: 
+• Component-based UI ensuring reusability and consistency. 
+• Dedicated pages for Chat, Course Builder, and Home for better navigation 
+flow. 
+• State management using Zustand, making the UI reactive and responsive. 
+• Clean separation between API calls, components, and layout logic, 
+supporting long-term scalability 
+ 
+8.1 Backend Implementation using FastAPI 
+Our backend is built using FastAPI, chosen for its speed, async support, and ease of 
+integration with modern AI services. The backend provides REST APIs for: 
+• Course building 
+• Profile-based recommendations 
+• YouTube playlist ranking 
+• Chat-based tutoring 
+• Health and status endpoints 
+8.1.1 FastAPI Project Structure 
+The code snapshots illustrate a clean modular breakdown: 
+• main.py → API initialization, routing, and CORS configuration 
+• services/ → Business logic modules 
+• prompt_system/ → LLM prompts for course building 
+• youtube_client/ → YouTube Data API wrapper 
+• course_engine.py → Core course tailoring logic 
+8.1.2 main.py – API Initialization 
+Screenshots show the following key implementations: 
+• CORS setup for frontend communication 
+• Mounting routes such as /health, /chat, /course-build 
+• Logging server status on startup 
+This ensures seamless communication between the Next.js client and backend. 
+68
+--- Page 69 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8.2 Core LLM Course Engine (Business Logic) 
+A major part of the system involves generating intelligent course structures using 
+our custom LLM engine. 
+8.2.1 Video Normalization Logic 
+The course_engine.py file includes functions to: 
+69
+--- Page 70 ---
+• Convert raw YouTube video objects into a uniform internal structure 
+• Extract widgets such as title, thumbnail, channel, statistics, etc. 
+• Handle missing/optional fields gracefully 
+This normalization step is crucial because YouTube API responses vary heavily. 
+8.2.2 Duration, Relevance & Scoring Functions 
+Your snapshots show multiple helper functions: 
+• parse_duration() → Converts ISO 8601 YouTube durations into seconds 
+• compute_relevance() → Calculates a multi-metric relevance score using: 
+o channel reputation 
+o engagement rate 
+o freshness 
+o topic similarity 
+o caption availability 
+These formulas help the LLM produce high-quality course modules based on 
+evidence and computation, not just text generation. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+70
+--- Page 71 ---
+8.3 YouTube Data Pipeline & Ranking Algorithm 
+To generate effective personalized course modules, it was necessary to curate YouTube 
+content intelligently rather than simply fetching random videos. 
+8.3.1 YouTube API v3 Integration 
+The youtube_client.py code implements: 
+• A reusable client wrapper for structured API calls 
+• Methods to fetch videos by topic, keyword, or filters 
+• Handling max results, pagination tokens, and metadata parsing 
+• Validations to avoid empty result sets 
+8.3.2 Playlist Curation & Ranking 
+The provided code implements a powerful ranking formula combining: 
+1. Video metadata score 
+2. Channel authority 
+3. Engagement ratios 
+4. Content freshness 
+5. Relevance heuristics based on user profile 
+The output is sorted descending to ensure the most suitable educational videos 
+appear first. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+71
+--- Page 72 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+72
+--- Page 73 ---
+8.4 System Prompt Engineering (LLM Intelligence Layer) 
+One of the strongest parts of the project is the prompt engineering layer, shown in 
+the snapshots under prompt_system/. 
+8.4.1 Context-Aware System Prompts 
+You implemented a strict JSON-only output enforcement prompt, ensuring: 
+• Zero hallucination 
+• Predictable structure for the frontend 
+• Reliable content parsing 
+8.4.2 User Profile Awareness 
+The prompt template dynamically incorporates: 
+• Learner’s skill level 
+• Learning preferences 
+• Time constraints 
+• Domain interest 
+• Learning pace & style 
+8.4.3 Course Builder Orchestration Prompt 
+The second prompt controls: 
+• Module creation logic 
+• Lesson expansion rules 
+• Task generation 
+• YouTube search strategy 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+73
+--- Page 74 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8.5 Chat-Based Tutoring Engine 
+Your snapshot of the chat module demonstrates: 
+• User query parsing 
+• Context-aware conversation handling 
+• Memory-based personalization 
+• Safety-filtered responses 
+The LLM is guided through a structured system message that ensures helpful, safe, 
+and syllabus-aligned responses. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+74
+--- Page 75 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8.6 Frontend Coding (Next.js)  
+The frontend is built using Next.js 13 with the App Router. 
+8.6.1 Layout.tsx 
+The snapshot shows: 
+• Google Fonts import (Inter, Geist Mono) 
+• Root layout configuration 
+• Global styling with Tailwind CSS 
+• Theme wrapper integration 
+This ensures consistent UI across pages. 
+8.6.2 Package.json 
+The shared file includes dependencies such as: 
+• next, react, tailwindcss 
+• axios for API requests 
+• zustand for frontend state management 
+• react-markdown for rendering AI responses 
+• clsx and framer-motion for animations 
+This establishes a modern, scalable frontend setup. 
+75
+--- Page 76 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8.7 API Consumption & UI Integration 
+The frontend integrates with backend endpoints for: 
+• Course generation (/course-build) 
+• Profile submission 
+• Chat tutoring (/chat) 
+• Health/status checks 
+Axios handlers manage: 
+• Error handling 
+• Loading states 
+• Data caching 
+• Toast notifications 
+The integration ensures a smooth user journey from submitting their profile → 
+generating a personalized course → interacting with the AI tutor. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+76
+--- Page 77 ---
+8.8 Source Code Repository (GitHub) –  
+The complete source code for the “GenAI-Powered Intelligent Course Builder & 
+Personalized Tutor” project is maintained in a public GitHub repository. 
+It contains the backend (FastAPI), frontend (Next.js), model pipelines, RAG 
+implementation, and deployment configuration files. 
+GitHub Repository Link: 
+https://github.com/shreyansh-Geek/LeetAI 
+ 
+8.9 Summary of Coding Implementation 
+This chapter demonstrated how the system works end-to-end: 
+Module Technology Purpose 
+Backend FastAPI API engine for course building and chat 
+LLM Logic Prompt engineering Personalized learning flow 
+YouTube Client YouTube API v3 Fetching and ranking videos 
+Course Engine Python business logic Custom scoring, normalization 
+Frontend Next.js User interface & user experience 
+State & Data Axios + Zustand API and state management 
+Together, these modules form a complete, production-ready GenAI educational 
+platform. 
+! 
+77
+--- Page 78 ---
+CHAPTER 9 
+PROJECT LIMITATIONS AND FUTURE SCOPE 
+ 
+9.1 Introduction 
+Every software system, especially one built using cutting -edge technologies like 
+Generative AI, comes with certain operational boundaries. These limitations are not 
+shortcomings, but rather natural constraints arising from time -bound development, 
+evolving AI capabilities, and MVP -focused implementation. Recognizing these 
+limitations is essential because it helps in defining clearer development priorities, setting 
+realistic expectations, and identifying opportunities for future enhancements. 
+The GenAI-Powered Intelligent Course Builder & Personalized Tutor  is an 
+impressive MVP built with FastAPI, Next.js, MongoDB Atlas, and a RAG -based 
+semantic AI engine. While the system successfully delivers personalized course 
+creation, YouTube-based resource discovery , semantic ranking , and AI-driven 
+tutoring, it still has areas where functionality can be improved to achieve a fully 
+enterprise-gradesolution. 
+(Aligned with PRD features & NFRs)  
+ 
+9.2 Project Limitations 
+The limitations are classified into technical, functional, data-related, and user-
+experience-related categories to maintain academic clarity. 
+ 
+9.2.1 Technical Limitations 
+1. Dependency on External APIs 
+The system heavily depends on the YouTube Data API  for video discovery.  
+If the API becomes rate -limited, returns inconsistent metadata, or undergoes version 
+changes, the system may momentarily fail to fetch resources.  
+(This is a natural limitation of API-driven architectures.) 
+2. Limited Computing Resources for LLM Operations 
+Since the MVP uses hosted or limited-resource models (e.g., LLaMA/Mistral/Groq) 
+rather than full-scale enterprise GPUs, certain tasks like generating long module 
+notes, flashcards, or complex quizzes may take additional time. 
+ 
+78
+--- Page 79 ---
+3. Vector Database Size Constraints 
+The Vector DB (Qdrant/Chroma) used for storing embeddings may face scalability 
+challenges when storing embeddings for hundreds of videos or large course materials.  
+Embedding retrieval is optimized (<100ms as per NFRs) but may slow down for very 
+large datasets.  
+4. RAG Context Window Limit 
+The RAG tutor retrieves chunks based on embeddings. 
+If a student's question references a very large topic, not all content can fit within the 
+model’s context window, resulting in generic or incomplete answers. 
+ 
+9.2.2 Functional Limitations 
+1. Course Quality Depends on Internet Data Availability 
+If the topic is niche or long-tail, YouTube may not have sufficient high-quality videos 
+meeting ranking criteria like recency, engagement, channel credibility, etc. 
+2. No Multi-Language Course Support Yet 
+Currently, content recommendations and materials are generated primarily in 
+English, limiting accessibility for regional-language learners. 
+3. Limited Real-Time Progress Tracking 
+Although the PRD includes future analytics, the MVP does not yet provide: 
+• learner progress graphs 
+• quiz performance analytics 
+• behavioural recommendations 
+(These are marked under future enhancements.)  
+ 
+9.2.3 Data and Content Limitations 
+1. Dependence on Video Metadata Quality 
+YouTube metadata (titles, tags, descriptions) varies significantly in accuracy. 
+Incorrect metadata may reduce the ranking quality or cause semantically irrelevant 
+videos to appear. 
+2. No In-Depth Topic Validation 
+79
+--- Page 80 ---
+The system currently does not verify whether a video covers 100% of the topic, only 
+whether it is semantically similar and high-performing. 
+3. Limited Dataset for Evaluating Tutor Responses 
+The AI tutor’s answer quality depends on embeddings generated from course 
+resources. 
+If resources are shallow, tutor answers may also lack deeper conceptual depth. 
+ 
+9.2.4 User Experience and UI Limitations 
+1. No Mobile Application Yet 
+The system is optimized for web usage (Next.js), but has no dedicated mobile app, 
+reducing accessibility for on-the-go learners. 
+2. Limited UI Personalization 
+The course panel UI is functional but can be more interactive, supporting: 
+• drag-and-drop modules 
+• bookmarking 
+• personal notes 
+• dark/light mode toggles 
+3. No Gamification Layer 
+Modern learning systems include badges, streaks, and rewards. 
+The current MVP focuses on functionality rather than engagement design. 
+ 
+9.4 Future Scope 
+Based on the PRD’s “Future Enhancements” section and modern EdTech trends, the 
+following scope extensions are identified:  
+ 
+9.4.1 Advanced Learning Analytics 
+The system can be enhanced with: 
+• Weekly learning progress charts 
+• Quiz performance heatmaps 
+80
+--- Page 81 ---
+• Time-on-platform tracking 
+• Personalized recommendations based on behaviour 
+This would help learners understand their strengths and improvement areas. 
+ 
+9.4.2 Certificate Generation 
+After completing a structured course, the system could issue: 
+• downloadable certificates 
+• blockchain-verified badges 
+• shareable LinkedIn certifications 
+This increases the credibility of learning outcomes. 
+ 
+9.4.3 Support for Multiple Saved & Parallel Courses 
+Currently, the system generates one course at a time. 
+Future updates may include: 
+• saving multiple courses 
+• switching between courses 
+• merging two learning paths into one 
+• maintaining separate notes & quizzes per track 
+ 
+9.4.4 Mobile Application (Android + iOS) 
+A dedicated mobile app can offer: 
+• offline notes access 
+• download of quizzes & flashcards 
+• real-time tutor chat 
+• notifications for next modules 
+This would greatly improve accessibility. 
+ 
+9.4.5 Community & Collaboration Features 
+81
+--- Page 82 ---
+Future versions may include: 
+• peer-to-peer discussion forums 
+• shared learning groups 
+• student–mentor interactions 
+• community ranking of resources 
+This transforms the system into a full-fledged social learning platform. 
+ 
+9.4.6 Enhanced RAG-based Tutoring 
+Upcoming improvements may include: 
+• multi-document reasoning 
+• long-context models (200k–1M tokens) 
+• memory-enabled tutoring (saving previous queries) 
+• voice-based and multimodal tutor interactions 
+This would turn the tutor into a truly intelligent virtual teaching assistant. 
+ 
+9.4.7 Offline Mode for Notes and Flashcards 
+The platform can allow users to download: 
+• module summaries 
+• flashcards 
+• quizzes and solutions 
+This is particularly helpful for students with limited connectivity. 
+ 
+9.4.8 Integration with LMS Platforms 
+Integration with Moodle, Google Classroom, or Microsoft Teams would allow 
+students to: 
+• submit quizzes 
+• sync grades 
+• access notes from institutional platforms 
+82
+--- Page 83 ---
+9.4.9 Multilingual Learning Support 
+Future versions may support Indian regional languages and global languages using 
+multilingual LLMs. 
+ 
+9.4.10 Self-Improving Ranking Algorithms 
+The ranking system can be improved by adding: 
+• AI-driven weight adjustment 
+• hybrid ranking (semantic + user feedback) 
+• video quality detection 
+• topic-depth scoring models 
+This ensures more accurately curated content. 
+ 
+9.5 Summary 
+This chapter discussed the major limitations and future scope of the GenAI-Powered 
+Intelligent Course Builder & Personalized Tutor . Although the MVP successfully 
+implements critical components like requirements gathering, YouTube -based 
+resource discovery, semantic ranking, structured course design, and RAG -based 
+tutoring, it still exhibits natural and expected limitations related to external APIs, 
+metadata quality, scalability, UI design, and feature completeness. 
+These limitations do not reduce the value of the project — instead, they highlight 
+opportunities for iterative development, leading towards a more robust, scalable, and 
+user-centric EdTech system. The future scope clearly outlines how the project can 
+evolve into a full-fledged adaptive learning platform with analytics, certification, multi-
+course support, multilingual content, and advanced tutoring capabilities. 
+ 
+ 
+ 
+ 
+  
+  
+83
+--- Page 84 ---
+CHAPTER 10 
+REFERENCES 
+ 
+10.1 Books, Papers & Academic Resources 
+1. Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V ., Goyal, N., et al. 
+(2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. 
+arXiv. 
+Link: https://arxiv.org/abs/2005.11401 
+2. Gao, Y ., Xiao, S., et al. (2023). Retrieval-Augmented Generation for Large 
+Language Models: A Survey. arXiv. 
+Link: https://arxiv.org/abs/2312.10997 
+3. Reimers, N., & Gurevych, I. (2019). Sentence-BERT: Sentence Embeddings 
+using Siamese BERT Networks. EMNLP. 
+Link: https://aclanthology.org/D19-1410.pdf 
+4. Gligorea, I., et al. (2023). Adaptive Learning Using Artificial Intelligence in e-
+Learning. MDPI. 
+Link: https://www.mdpi.com/search?q=Adaptive+Learning+Using+AI 
+5. Du Plooy, L., et al. (2024). Personalized Adaptive Learning in Higher 
+Education: A Scoping Review. Springer / Scopus. 
+Link: https://link.springer.com/search?query=adaptive+learning 
+ 
+10.2 Vector Databases, Retrieval & Similarity Search 
+6. Qdrant. Qdrant Vector Database Documentation. 
+Link: https://qdrant.tech/documentation/overview/ 
+7. ChromaDB. Chroma Documentation – Getting Started. 
+Link: https://docs.trychroma.com/getting-started 
+8. Facebook AI Research. F AISS: Facebook AI Similarity Search – GitHub 
+Repository. 
+Link: https://github.com/facebookresearch/faiss 
+9. Pinecone. Pinecone Vector Database Documentation. 
+Link: https://www.pinecone.io/ 
+ 
+84
+--- Page 85 ---
+10.3 GenAI Frameworks, Orchestration & LLM Tools 
+10. LangChain. LangChain Documentation – RAG & Retrieval Patterns. 
+Link: https://docs.langchain.com/oss/python/langchain/rag 
+11. Meta AI. LLaMA Model Family – Official Page / Papers. 
+Link: https://ai.meta.com/research/publications/ 
+12. Mistral AI. Model Overview & Documentation. 
+Link: https://mistral.ai/news 
+ 
+10.4 APIs, Services & Integrations 
+13. Google Developers. YouTube Data API v3 – Reference Documentation. 
+Link: https://developers.google.com/youtube/v3/docs 
+14. Google Cloud. YouTube API – Quickstart and Billing Guide. 
+Link: https://developers.google.com/youtube 
+ 
+10.5 Frameworks, Databases & Deployment Stack 
+15. FastAPI. FastAPI Official Documentation. 
+Link: https://fastapi.tiangolo.com/ 
+16. Next.js / Vercel. Next.js Official Documentation. 
+Link: https://nextjs.org/docs 
+17. MongoDB Atlas. Atlas Cloud Database Documentation. 
+Link: https://www.mongodb.com/docs/atlas/ 
+ 
+10.6 Industry Reports & Contextual News 
+18. Reuters. HSBC announces partnership with Mistral AI. 
+Link: https://www.reuters.com 
+19. Financial Times. Mistral AI expands enterprise GenAI ecosystem. 
+Link: https://www.ft.com 
+ 
+ 
+ 
+ 
+85
+--- Page 86 ---
+10.7 Internal Project References (Your Uploads) 
+20. Product Requirements Document – Personalized AI Course Builder & 
+Tutor. (Internal Document) 
+Included in project files.  
+21. LNCT Minor Project Format Template. (Internal Document) 
+Included in project files.  
+ 
+ 
+86
