@@ -15,8 +15,9 @@ export default function YouTubePrefsCard() {
     if (isSubmitting) return;
     setIsSubmitting(true);
 
-    if (fav.trim()) updatePending("favoriteChannels", fav.trim());
-    if (avoid.trim()) updatePending("avoidChannels", avoid.trim());
+    // If left empty, set to "None" so the backend LLM loop breaks and recognizes them as complete
+    updatePending("favoriteChannels", fav.trim() || "None");
+    updatePending("avoidChannels", avoid.trim() || "None");
 
     await Promise.resolve();
     await completeCard();
