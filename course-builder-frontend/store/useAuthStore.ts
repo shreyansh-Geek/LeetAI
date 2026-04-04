@@ -10,8 +10,10 @@ interface User {
 interface AuthState {
   token: string | null;
   user: User | null;
-  setToken: (token: string) => void;
-  setUser: (user: User) => void;
+  hydrated: boolean;
+  setToken: (token: string | null) => void;
+  setUser: (user: User | null) => void;
+  setHydrated: (value: boolean) => void;
   logout: () => void;
 }
 
@@ -20,12 +22,19 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       token: null,
       user: null,
+      hydrated: false,
+
       setToken: (token) => set({ token }),
       setUser: (user) => set({ user }),
+      setHydrated: (hydrated) => set({ hydrated }),
+
       logout: () => set({ token: null, user: null }),
     }),
     {
       name: "leetai-auth-storage",
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated(true);
+      },
     }
   )
 );
