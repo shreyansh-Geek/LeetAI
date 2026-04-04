@@ -15,6 +15,9 @@ export interface CourseMetadata {
 }
 
 export interface CourseBuildResponse {
+  id?: string;
+  user_id?: string;
+  created_at?: string;
   summary: string;
   modules: CourseModule[];
   playlist: PlaylistItem[];
