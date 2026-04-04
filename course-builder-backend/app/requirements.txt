@@ -14,6 +14,7 @@ typing-extensions
 # Auth & Database
 motor
 pymongo
+bcrypt
 passlib[bcrypt]
 pyjwt
 python-multipart
