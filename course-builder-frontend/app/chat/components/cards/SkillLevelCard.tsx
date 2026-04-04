@@ -4,9 +4,12 @@ import { useState } from "react";
 import { useChatStore } from "../../store/useChatStore";
 import { SkillLevel } from "../../types/profile";
 
+import { useProfileStore } from "../../store/useProfileStore";
+
 export default function SkillLevelCard() {
   const updatePending = useChatStore((s) => s.updatePendingCardField);
   const completeCard = useChatStore((s) => s.completeCardAndSubmit);
+  const topic = useProfileStore((s) => s.profile.topic) || "this topic";
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -14,7 +17,7 @@ export default function SkillLevelCard() {
     {
       label: "Absolute Beginner",
       value: "absolute-beginner",
-      description: "New to coding / DSA. Starting from scratch.",
+      description: `New to ${topic}. Starting from scratch.`,
     },
     {
       label: "Beginner",
@@ -49,7 +52,7 @@ export default function SkillLevelCard() {
       "
     >
       <h3 className="text-sm font-semibold text-[#24CFA6] mb-3">
-        Where are you right now with DSA?
+        Where are you right now with {topic}?
       </h3>
 
       <div className="grid md:grid-cols-2 gap-4">
