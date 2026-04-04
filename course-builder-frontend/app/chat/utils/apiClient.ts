@@ -1,11 +1,17 @@
 import { ChatRequestPayload, BackendHybridResponse } from "../types/chat";
+import { useAuthStore } from "@/store/useAuthStore";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
 export async function sendToBackend(payload: ChatRequestPayload): Promise<BackendHybridResponse> {
   try {
-    const res = await fetch("http://localhost:8000/chat/", {
+    const token = useAuthStore.getState().token;
+    
+    const res = await fetch(`${BASE_URL}/chat/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(payload),
     });
