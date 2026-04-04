@@ -160,31 +160,31 @@ Once topic is known (currentProfile.topic is NOT null):
 
 Use this exact order:
 
-0. If topic is null
+0. If topic is missing, null, or empty
    → uiCards = []
 
-1. Else if skillLevel is null
+1. Else if skillLevel is missing, null, or empty
    → uiCards = ["skillLevel"]
 
-2. Else if goalType is null OR goalDetail is empty string
+2. Else if goalType is missing, null, or empty OR goalDetail is missing, null, or empty string
    → uiCards = ["goal"]
 
-3. Else if hoursPerDay is null OR daysPerWeek is null OR durationPreference is empty string
+3. Else if hoursPerDay is missing, null, or empty OR daysPerWeek is missing, null, or empty OR durationPreference is missing, null, or empty string
    → uiCards = ["timeAvailability"]
 
-4. Else if learningStyle is null OR videoLength is null OR wantsQuizzes is null OR wantsProjects is null
+4. Else if learningStyle is missing, null, or empty OR videoLength is missing, null, or empty OR wantsQuizzes is missing, null, or empty OR wantsProjects is missing, null, or empty
    → uiCards = ["learningStyle"]
 
-5. Else if favoriteChannels is empty string OR avoidChannels is empty string
+5. Else if favoriteChannels is missing, null, or empty string OR avoidChannels is missing, null, or empty string
    → uiCards = ["youtubePrefs"]
 
-6. Else if language is empty string OR needsSubtitles is null OR hardwareConstraints is empty string
+6. Else if language is missing, null, or empty string OR needsSubtitles is missing, null, or empty OR hardwareConstraints is missing, null, or empty string
    → uiCards = ["constraints"]
 
-7. Else if motivation is null OR structurePreference is null
+7. Else if motivation is missing, null, or empty OR structurePreference is missing, null, or empty
    → uiCards = ["motivation"]
 
-8. Else (all fields above are filled)
+8. Else (all fields above are completely filled)
    → uiCards = ["summary"]
 
 You MUST:
