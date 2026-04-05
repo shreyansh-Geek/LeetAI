@@ -15,10 +15,17 @@ export function CourseLayout() {
   let rightPane: React.ReactNode;
   let leftPane: React.ReactNode = null;
 
+  const isBuilding =
+    status === "loading" ||
+    status === "planning" ||
+    status === "youtube" ||
+    status === "ranking" ||
+    status === "finalizing";
+
   // -----------------------------
   // 1) LOADING (build in progress)
   // -----------------------------
-  if (status === "loading") {
+  if (isBuilding) {
     rightPane = <LoadingState />;
   }
 
