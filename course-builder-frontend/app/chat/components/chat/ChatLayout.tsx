@@ -78,6 +78,7 @@ export default function ChatLayout() {
           </section>
         </div>
       </main>
+      {showFinalModal && <FinalConfirmationCard />}
     </div>
   );
 }

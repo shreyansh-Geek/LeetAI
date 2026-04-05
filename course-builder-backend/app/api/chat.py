@@ -21,8 +21,7 @@ from app.ai.prompt_system import SYSTEM_PROMPT
 from app.core.security import get_current_user
 
 logger = logging.getLogger(__name__)
-router = APIRouter()
-
+router = APIRouter(prefix="/chat", tags=["chat"])
 
 # -------------------------------------------
 # Request / Response Models
