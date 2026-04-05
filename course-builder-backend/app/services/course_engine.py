@@ -1,20 +1,37 @@
 # app/services/course_engine.py
+"""
+Course generation pipeline — LangChain + Gemini.
 
+Pipeline stages (streamed via SSE):
+1. planning   → LLM generates skeleton + YouTube search plan
+2. youtube    → Fetch candidate videos from YouTube API
+3. ranking    → Score and rank videos per module
+4. finalizing → LLM assembles final course JSON from ranked videos
+5. success    → Validated course returned to frontend
+"""
+
+import asyncio
 import json
+import logging
 import re
 from typing import Dict, List
 
-from google import genai
+from langchain_core.messages import HumanMessage
 
-from app.core.config import settings
-from app.schemas.course_build import CourseBuildRequest, CourseBuildResponse
-from app.services.youtube_client import YouTubeClient
-from app.services.ranking import rank_videos
+from app.ai.llm import course_llm
 from app.ai.course_builder_prompt import build_skeleton_prompt, build_finalize_prompt
+from app.schemas.course_build import CourseBuildRequest, CourseBuildResponse
+from app.services.ranking import rank_videos
+from app.services.youtube_client import YouTubeClient
 
-client = genai.Client(api_key=settings.GEMINI_API_KEY)
+logger = logging.getLogger(__name__)
+
 yt_client = YouTubeClient()
 
+
+# ─────────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────────
 
 def _map_video_resource_to_simple(video: Dict) -> Dict:
     """
@@ -79,7 +96,9 @@ def _extract_json_block(raw: str) -> Dict:
         raise ValueError(f"Could not parse JSON from LLM output: {e}\nRaw was:\n{raw[:500]}")
 
 
-import asyncio
+# ─────────────────────────────────────────────────
+# Main Pipeline
+# ─────────────────────────────────────────────────
 
 async def build_course_stream(req: CourseBuildRequest):
     """
@@ -92,18 +111,20 @@ async def build_course_stream(req: CourseBuildRequest):
     """
 
     yield {"status": "planning"}
+
     # -------------------------------------------------
     # 1) Skeleton + search plan (planner LLM)
     # -------------------------------------------------
     skeleton_prompt = build_skeleton_prompt(req)
 
     skeleton_resp = await asyncio.to_thread(
-        client.models.generate_content,
-        model="gemini-2.5-flash-lite",
-        contents=skeleton_prompt,
+        course_llm.invoke,
+        [HumanMessage(content=skeleton_prompt)],
     )
 
-    skeleton_raw = (getattr(skeleton_resp, "text", "") or "").strip()
+    skeleton_raw = (skeleton_resp.content or "").strip()
+    logger.debug("Skeleton raw: %s", skeleton_raw[:500])
+
     skeleton = _extract_json_block(skeleton_raw)
     modules = skeleton.get("modules", []) or []
 
@@ -161,12 +182,13 @@ async def build_course_stream(req: CourseBuildRequest):
             continue
 
         yield {"status": "ranking"}
-        ranked = await asyncio.to_thread(rank_videos, req.profile, candidates, 5) # Passing 5 explicitly as kwargs issues may arise
+        ranked = await asyncio.to_thread(rank_videos, req.profile, candidates, 5)
         module_videos_simple[mod_id] = [
             _map_video_resource_to_simple(v) for v in ranked
         ]
 
     yield {"status": "finalizing"}
+
     # -------------------------------------------------
     # 3) Finalize course JSON via LLM
     # -------------------------------------------------
@@ -177,12 +199,12 @@ async def build_course_stream(req: CourseBuildRequest):
     )
 
     final_resp = await asyncio.to_thread(
-        client.models.generate_content,
-        model="gemini-2.5-flash-lite",
-        contents=finalize_prompt,
+        course_llm.invoke,
+        [HumanMessage(content=finalize_prompt)],
     )
 
-    final_raw = (getattr(final_resp, "text", "") or "").strip()
+    final_raw = (final_resp.content or "").strip()
+    logger.debug("Final raw: %s", final_raw[:500])
 
     try:
         final_data = _extract_json_block(final_raw)

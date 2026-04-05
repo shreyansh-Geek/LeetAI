@@ -5,8 +5,9 @@ requests
 isodate
 python-dotenv
 
-# Google Gemini / GenAI
-google-genai
+# LangChain + Google Gemini
+langchain-core
+langchain-google-genai
 
 # Optional, but common
 typing-extensions
