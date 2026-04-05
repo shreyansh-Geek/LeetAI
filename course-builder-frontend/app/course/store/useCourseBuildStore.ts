@@ -27,7 +27,7 @@ interface CourseBuildState {
     router: AppRouterInstance,
     profile: Profile,
     userSummary?: string
-  ) => void;
+  ) => Promise<void>;
 
   reset: () => void;
 }
@@ -37,30 +37,31 @@ export const useCourseBuildStore = create<CourseBuildState>((set) => ({
   error: null,
   course: null,
 
-  /**
-   * NON-SSE VERSION — simple POST request
-   */
   startBuild: async (router, profile, userSummary = "") => {
     console.log("🚀 startBuild() triggered (SSE MODE)");
     console.log("Profile passed:", profile);
 
-    // UI loading immediately
     set({
       status: "loading",
       error: null,
       course: null,
     });
 
-    // navigate to course screen
+    // Navigate immediately so user sees build progress screen
     router.push("/course");
 
     try {
       const token = useAuthStore.getState().token;
+
+      if (!token) {
+        throw new Error("Missing auth token.");
+      }
+
       const res = await fetch(`${BASE_URL}/course-build/start`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           profile,
@@ -84,37 +85,57 @@ export const useCourseBuildStore = create<CourseBuildState>((set) => ({
 
         buffer += decoder.decode(value, { stream: true });
 
-        // Process fully received SSE messages separated by double newlines
         let boundary = buffer.indexOf("\n\n");
+
         while (boundary !== -1) {
           const completeEvent = buffer.slice(0, boundary);
-          buffer = buffer.slice(boundary + 2); // rest of buffer
+          buffer = buffer.slice(boundary + 2);
 
           if (completeEvent.startsWith("data: ")) {
-            const jsonStr = completeEvent.substring(6);
+            const jsonStr = completeEvent.substring(6).trim();
+
+            if (!jsonStr) {
+              boundary = buffer.indexOf("\n\n");
+              continue;
+            }
+
             try {
               const data = JSON.parse(jsonStr);
+              console.log("📡 SSE chunk received:", data);
+
               if (data.status === "success") {
-                set({ status: "success", course: data.course, error: null });
+                set({
+                  status: "success",
+                  course: data.course,
+                  error: null,
+                });
                 console.log("✅ Course build complete:", data.course);
               } else if (data.status === "error") {
-                set({ status: "error", error: data.message });
+                set({
+                  status: "error",
+                  error: data.message || "Course generation failed.",
+                });
               } else {
-                set({ status: data.status as BuildStatus });
+                set({
+                  status: data.status as BuildStatus,
+                });
               }
             } catch (err) {
-              console.error("JSON parse error on streaming chunk:", err);
+              console.error("❌ JSON parse error on streaming chunk:", err, jsonStr);
             }
           }
+
           boundary = buffer.indexOf("\n\n");
         }
       }
-
     } catch (err) {
       console.error("❌ Course build failed:", err);
       set({
         status: "error",
-        error: "Failed to build course. Please try again.",
+        error:
+          err instanceof Error
+            ? err.message
+            : "Failed to build course. Please try again.",
       });
     }
   },

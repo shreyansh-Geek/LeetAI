@@ -1,5 +1,5 @@
-# app/ai/course_builder_prompt.py
 from app.schemas.course_build import CourseBuildRequest
+
 
 def build_skeleton_prompt(req: CourseBuildRequest) -> str:
     p = req.profile
@@ -38,6 +38,13 @@ OUTPUT STRICT JSON:
     }}
   ]
 }}
+
+Rules:
+- Make the module sequence logically progressive
+- Respect learner goals, time, and skill level
+- Keep modules concise and realistic
+- Return ONLY valid JSON
+- Do not include markdown
 """.strip()
 
 
@@ -51,6 +58,7 @@ def build_finalize_prompt(
     module_videos: { "m1": [ {title, url, channel, duration, ...}, ... ], ... }
     """
     p = req.profile
+
     return f"""
 You are LeetAI, an AI course architect.
 
@@ -103,5 +111,7 @@ Rules:
 - Explain "whyChosen" by linking the video to the user profile (goals, constraints).
 - Ensure difficultyCurve is coherent from the user's skillLevel to their goal.
 - Derive totalTime using the durations you see + profile.hoursPerDay/daysPerWeek.
-Return ONLY JSON, no extra text.
+- Keep descriptions and outcomes practical and concise.
+- Return ONLY valid JSON
+- Do not include markdown
 """.strip()
