@@ -1,16 +1,27 @@
-from fastapi import APIRouter, HTTPException, Depends
+# app/api/chat.py
+"""
+Chat endpoint — conversational profile-gathering via LangChain + Gemini.
+
+The LLM acts as a strict JSON-only state machine that:
+1. Reads the current learner profile
+2. Determines which UI card to show next
+3. Returns { reply, uiCards, profileUpdates }
+"""
+
+import json
+import logging
+from typing import Any, Dict, List
+
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from google import genai
-from app.core.config import settings
+from langchain_core.messages import HumanMessage, SystemMessage
+
+from app.ai.llm import chat_llm
 from app.ai.prompt_system import SYSTEM_PROMPT
 from app.core.security import get_current_user
 
-import json
-from typing import Any, List, Dict
-
+logger = logging.getLogger(__name__)
 router = APIRouter()
-
-client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 
 # -------------------------------------------
@@ -24,7 +35,7 @@ class ChatHistoryItem(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
-    history: List[Dict[str, Any]]  # raw list from frontend
+    history: List[Dict[str, Any]]   # raw list from frontend
     profile: Dict[str, Any]
 
 
@@ -38,32 +49,36 @@ class HybridResponse(BaseModel):
 # Prompt Builder
 # -------------------------------------------
 
-def build_llm_prompt(history: List[Dict[str, Any]], profile: Dict[str, Any], user_message: str) -> str:
+def _build_messages(
+    history: List[Dict[str, Any]],
+    profile: Dict[str, Any],
+    user_message: str,
+) -> list:
     """
-    Build a clean, non-repeating transcript for Gemini.
+    Build a LangChain message list for the chat LLM.
 
-    - Assistant messages are ignored.
-    - Only user messages are included.
-    - Current profile JSON is appended once.
+    - SystemMessage: contains the full system prompt + current profile JSON.
+    - HumanMessage:  transcript of user messages + the latest message.
     """
-
     system_block = SYSTEM_PROMPT + f"""
 
 CURRENT PROFILE STATE (machine-readable JSON strictly):
 {json.dumps(profile, ensure_ascii=False)}
 """
 
+    # Build user transcript (only user messages from history)
     transcript = ""
-
-    # Keep ONLY user messages from history
     for msg in history:
         if msg.get("role") == "user":
             transcript += f"User: {msg.get('text', '')}\n"
 
-    # Add latest user message
+    # Add the latest user message
     transcript += f"User: {user_message}\n"
 
-    return system_block + "\n" + transcript
+    return [
+        SystemMessage(content=system_block),
+        HumanMessage(content=transcript),
+    ]
 
 
 # -------------------------------------------
@@ -73,46 +88,33 @@ CURRENT PROFILE STATE (machine-readable JSON strictly):
 @router.post("/", response_model=HybridResponse)
 def chat_endpoint(req: ChatRequest, current_user: dict = Depends(get_current_user)):
 
-    prompt = build_llm_prompt(req.history, req.profile, req.message)
+    messages = _build_messages(req.history, req.profile, req.message)
 
-    print("\n===== SENDING TO GEMINI =====")
-    print(prompt)
-    print("===== END PROMPT =====\n")
+    logger.debug("Sending %d messages to chat LLM", len(messages))
 
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-        )
+        response = chat_llm.invoke(messages)
+        raw = (response.content or "").strip()
 
-        raw = (getattr(response, "text", "") or "").strip()
-
-        print("\n===== RAW LLM OUTPUT =====")
-        print(raw)
-        print("===== END RAW OUTPUT =====\n")
+        logger.debug("Raw LLM output: %s", raw[:500])
 
         # Strict JSON parse
         try:
             data = json.loads(raw)
-        except Exception as err:
-            print("\n!!! JSON PARSE FAILED !!!")
-            print(err)
-            print("Returning fallback.\n")
-
+        except json.JSONDecodeError as err:
+            logger.warning("JSON parse failed (%s), returning raw as reply", err)
             data = {
                 "reply": raw,
                 "uiCards": [],
-                "profileUpdates": {}
+                "profileUpdates": {},
             }
 
         return HybridResponse(
             reply=data.get("reply", ""),
             uiCards=data.get("uiCards", []) or [],
-            profileUpdates=data.get("profileUpdates", {}) or {}
+            profileUpdates=data.get("profileUpdates", {}) or {},
         )
 
     except Exception as e:
-        print("\n!!! LLM ERROR !!!")
-        print(e)
-        print("!!! END LLM ERROR !!!\n")
+        logger.error("LLM processing failed: %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail="LLM processing failed")
