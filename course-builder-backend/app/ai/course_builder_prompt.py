@@ -6,7 +6,8 @@ def build_skeleton_prompt(req: CourseBuildRequest) -> str:
     summary = req.userSummary or ""
 
     return f"""
-You are LeetAI, an AI course architect.
+You are LeetAI, an AI course architect. Design a practical learning roadmap and a
+high-precision YouTube discovery plan for every module.
 
 USER PROFILE:
 {p.model_dump_json(indent=2)}
@@ -15,36 +16,70 @@ USER SUMMARY:
 {summary}
 
 TASK:
-Design a staged learning plan (modules) AND a YouTube search strategy,
-but DO NOT pick exact videos yourself.
+Create a progressive course roadmap. For each module, define concrete learning
+outcomes and search queries that retrieve videos teaching those outcomes.
+Do NOT select or invent exact videos.
 
 OUTPUT STRICT JSON:
-
 {{
   "modules": [
     {{
       "id": "m1",
-      "title": "Module title",
-      "stageGoal": "Short goal sentence",
+      "title": "Specific module title",
+      "stageGoal": "A concrete, observable goal for this module",
       "difficulty": "beginner|intermediate|advanced",
       "estimatedDuration": "e.g. 2 weeks",
+      "keyTopics": ["specific concept", "specific concept"],
+      "learningOutcomes": [
+        "An observable skill the learner should gain",
+        "Another observable skill"
+      ],
       "searchPlan": [
         {{
-          "query": "search query string for YouTube",
+          "query": "Specific YouTube search query",
           "targetCount": 8,
-          "notes": "what kind of videos to look for (short, long, playlists, etc.)"
+          "notes": "Which learning outcome or topic this query covers"
         }}
       ]
     }}
   ]
 }}
 
-Rules:
-- Make the module sequence logically progressive
-- Respect learner goals, time, and skill level
-- Keep modules concise and realistic
-- Return ONLY valid JSON
-- Do not include markdown
+ROADMAP RULES:
+- Sequence modules from prerequisites to more advanced application.
+- Adapt to the user's goal, current level, available time, and preferences.
+- Avoid unnecessary modules, repeated topics, and vague filler modules.
+- Give each module 3-6 specific keyTopics and 3-5 measurable learningOutcomes.
+- Outcomes must describe skills or concepts, not generic statements such as
+  "understand the topic".
+- Keep module titles narrow enough that their relevance can be evaluated.
+
+
+YOUTUBE SEARCH PLAN RULES:
+- Create 2-4 distinct queries per module.
+- Each query must target one specific key topic or learning outcome.
+- Include the module's technology and the exact concept being taught.
+- Prefer searchable phrases such as:
+  "Spring Boot REST controller request body response status codes"
+  "Spring Data JPA entity relationships and repository methods"
+  "Java HashMap put get containsKey practical examples"
+- Use different search intents where appropriate:
+  1. Concept explanation
+  2. Practical implementation
+  3. Common problems or debugging
+  4. A focused project, when relevant
+- Do not repeat the same topic using superficial wording changes.
+- Avoid broad queries that could return videos for the entire course.
+- Each query's notes must identify the intended learning outcome
+  and the evidence that would make a video relevant.
+- Set targetCount to 6-8 for each query.
+- Do not include channel names unless the user explicitly prefers them.
+- Do not assume that a query will return relevant videos; candidates
+  must still be evaluated using their titles and available metadata.
+- Do not invent video details, availability, or quality claims.
+
+
+Return ONLY valid JSON. Do not include markdown or extra commentary.
 """.strip()
 
 
@@ -54,8 +89,8 @@ def build_finalize_prompt(
     module_videos: dict,
 ) -> str:
     """
-    skeleton: { "modules": [...] }
-    module_videos: { "m1": [ {title, url, channel, duration, ...}, ... ], ... }
+    skeleton: module structure with learning outcomes and search plans
+    module_videos: ranked candidate videos for each module
     """
     p = req.profile
 
@@ -72,8 +107,9 @@ CANDIDATE VIDEOS PER MODULE:
 {module_videos}
 
 TASK:
-Convert this into a finalized course JSON with this EXACT schema:
+Finalize the course using the supplied module skeleton and candidate videos.
 
+OUTPUT STRICT JSON with this exact top-level schema:
 {{
   "title": "A concise, topic-specific course title",
   "summary": "",
@@ -107,26 +143,37 @@ Convert this into a finalized course JSON with this EXACT schema:
   }}
 }}
 
-Rules:
-- Use ONLY the provided candidate videos. Never invent URLs, video titles, channels, or durations.
-- Assign videos to the module whose learning objective they best support.
-- Use the module skeleton's title, stageGoal, and searchPlan to determine relevance.
+VIDEO RELEVANCE AND SELECTION:
+- Treat each module's title, stageGoal, keyTopics, learningOutcomes, and searchPlan
+  as the source of truth for what belongs in that module.
+- Select only videos that directly teach at least one of that module's key topics
+  or learning outcomes. Mentioning the broad course subject is not sufficient.
+- Prefer videos with specific evidence of relevance in their titles and supplied
+  metadata. Do not infer detailed coverage from a vague title.
+- Select a complementary set: prefer resources that cover different aspects of
+  the module rather than several videos that appear to teach the same thing.
+- Prefer a focused, directly relevant set over filling every module with five
+  videos. A module may contain fewer videos, or none, if candidates are weak.
 - Do not assign the same video more than once within a module.
-- Prefer relevant videos over filling a module with unrelated videos.
-- If a module has no relevant candidate videos, return an empty videos array for that module.
-- Every module must contain a videos array, even if it is empty.
-- Build the global playlist from the selected module videos only.
+- Use ONLY supplied candidates. Never invent URLs, titles, channels, durations,
+  views, captions, or other metadata.
+- Preserve the actual title, URL, channel, and duration of every selected video.
+- Explain whyChosen briefly and specifically, tying the video to a module outcome.
+  Do not make unsupported claims about what the video contains.
+
+COURSE AND PLAYLIST RULES:
+- Keep the skeleton's module sequence and topic intent. You may improve wording,
+  but do not silently change the module's scope.
+- Use the skeleton's learningOutcomes as the basis for final module outcomes.
+- Every module must contain a videos array, even when empty.
+- Build the global playlist only from videos selected for modules.
 - Every playlist item must correspond to a video assigned to at least one module.
 - Use the same video URL consistently in modules and the global playlist.
-- Do not add videos to the global playlist that are absent from all module videos.
-- Preserve the actual title, URL, channel, and duration of each selected candidate video.
-- For each module video, explain whyChosen in terms of that module's learning objective and the user's goals.
-- Generate a concise, meaningful, topic-specific course title as a non-empty string.
-- Ensure difficultyCurve progresses logically from the user's current skill level toward their goal.
-- Estimate totalTime realistically using the module durations and the user's hoursPerDay/daysPerWeek.
-- Keep module descriptions and learning outcomes practical and concise.
-- Return ONLY valid JSON.
-- Do not include markdown.
+- Do not add videos to the playlist that are absent from module videos.
+- Generate a concise, meaningful, topic-specific course title.
+- Make module descriptions and outcomes practical and concise.
+- Ensure difficulty progresses logically from the user's current skill level.
+- Estimate totalTime realistically using module durations and the user's schedule.
 
-
+Return ONLY valid JSON. Do not include markdown or extra commentary.
 """.strip()
