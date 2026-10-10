@@ -1,0 +1,635 @@
+{
+            "title": "Java & Spring Boot Backend Developer Roadmap: From Zero to Job Ready",
+            "summary": "This comprehensive course is designed for beginners aiming to land a backend development job using Java and Spring Boot. You'll start with core Java fundamentals, progress through object-oriented programming, data structures, and advanced Java concepts. The curriculum then dives into database essentials with SQL, followed by an in-depth exploration of Spring Boot for building RESTful APIs, handling data persistence with JPA/Hibernate, and implementing robust security. The course culminates in a significant e-commerce backend capstone project, allowing you to apply all learned skills in a real-world context, and concludes with dedicated interview preparation and resume building to help you achieve your job goal. With a balanced learning style, this program emphasizes long, detailed video tutorials and hands-on projects, fitting your preferred duration of 3-6 months.",
+            "modules": [
+                {
+                    "title": "Java Fundamentals",
+                    "description": "Master core Java syntax, data types, control flow, and basic methods, laying a strong foundation for all subsequent modules.",
+                    "duration": "2 weeks",
+                    "outcomes": [
+                        "Write basic Java programs using variables, operators, and expressions.",
+                        "Implement control flow statements like if-else, switch, and loops.",
+                        "Create and use basic methods and understand arrays.",
+                        "Solve simple programming problems with fundamental Java constructs."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Java Full Course for Beginners",
+                            "url": "https://www.youtube.com/watch?v=eIrMbAQSU34",
+                            "whyChosen": "This long video provides a comprehensive introduction to Java fundamentals, covering variables, types, control flow, and basic methods with clear explanations and practical examples, which is ideal for a beginner aiming for a job."
+                        },
+                        {
+                            "title": "Java Tutorial for Beginners | Learn Java in 2 Hours",
+                            "url": "https://www.youtube.com/watch?v=UmnCZ7-9yDY",
+                            "whyChosen": "A concise yet thorough tutorial for beginners that quickly covers essential Java basics, including a mini-project to apply initial concepts, reinforcing practical skills for a job-oriented goal."
+                        },
+                        {
+                            "title": "Java Programming Full Tutorial in One Video (2024) | Java full course",
+                            "url": "https://www.youtube.com/watch?v=32DLasxoOiM",
+                            "whyChosen": "This extensive tutorial covers Java fundamentals in depth, including installation, basic syntax, and control flow. Its availability in Hindi (default audio language) makes it highly suitable for the user's language preference, allowing for a deeper understanding of initial concepts."
+                        }
+                    ]
+                },
+                {
+                    "title": "Object-Oriented Programming (OOP) in Java",
+                    "description": "Understand and apply core OOP principles: classes, objects, inheritance, polymorphism, abstraction, and encapsulation, which are critical for building scalable backend applications.",
+                    "duration": "2 weeks",
+                    "outcomes": [
+                        "Define and create classes and objects in Java.",
+                        "Implement inheritance and understand method overriding.",
+                        "Apply polymorphism through interfaces and abstract classes.",
+                        "Utilize encapsulation for data hiding and modularity.",
+                        "Design object-oriented solutions for common programming problems."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Java OOPs in One Shot | Object Oriented Programming | Java Language | Placement Course",
+                            "url": "https://www.youtube.com/watch?v=bSrm9RXwBaI",
+                            "whyChosen": "This 'one-shot' video provides a comprehensive overview of all major OOP concepts in Java, offering a solid foundation for understanding how to structure backend applications."
+                        },
+                        {
+                            "title": "Object Oriented Programming  in Java | Classes, Objects, new Keyword | Java Full Course #12",
+                            "url": "https://www.youtube.com/watch?v=tmXD7Kzun54",
+                            "whyChosen": "This video offers a foundational understanding of classes and objects, explaining the transition from procedural to object-oriented programming, which is essential for grasping the 'why' behind OOP before diving into its pillars. It also has Hindi audio."
+                        },
+                        {
+                            "title": "Master OOP in Java: Encapsulation, Abstraction, Polymorphism & Inheritance Explained in 20 Minutes",
+                            "url": "https://www.youtube.com/watch?v=LqPl23MTK5o",
+                            "whyChosen": "A concise and recent video that effectively explains the four pillars of OOP (Encapsulation, Abstraction, Polymorphism, Inheritance) with practical examples, serving as a quick yet thorough refresher or introduction. It also has Hindi audio."
+                        }
+                    ]
+                },
+                {
+                    "title": "Advanced Java Concepts & Collections",
+                    "description": "Learn about interfaces, abstract classes, exception handling, I/O streams, and the Java Collections Framework, enhancing your ability to write robust and efficient Java code.",
+                    "duration": "2 weeks",
+                    "outcomes": [
+                        "Differentiate between interfaces and abstract classes and apply them appropriately.",
+                        "Implement effective exception handling strategies using try-catch-finally and custom exceptions.",
+                        "Utilize the Java Collections Framework (Lists, Sets, Maps) for efficient data management.",
+                        "Understand generics for type-safe collections."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Java Interfaces Deep Dive | Default Methods, Functional, Marker Interfaces | Java Full Course #24",
+                            "url": "https://www.youtube.com/watch?v=YLLFHuStkW8",
+                            "whyChosen": "This video provides a deep dive into Java Interfaces, including default and static methods, and clarifies the relationship with abstract classes, which is crucial for understanding advanced Java design patterns. It also has Hindi audio."
+                        },
+                        {
+                            "title": "Complete Java Collections Framework in 1 Video - Java Collections Framework",
+                            "url": "https://www.youtube.com/watch?v=rzA7UJ-hQn4",
+                            "whyChosen": "A comprehensive tutorial dedicated to the Java Collections Framework, covering various data structures like ArrayList, Stack, Queue, HashSet, and HashMap, which are fundamental for efficient data handling in backend systems."
+                        },
+                        {
+                            "title": "Master Exceptions in Java: Try, Catch, Finally, Throw, Throws, try-with-resources & Custom Exception",
+                            "url": "https://www.youtube.com/watch?v=IZu5rZTN7PI",
+                            "whyChosen": "This video offers a detailed explanation of Java exception handling, including checked/unchecked exceptions, custom exceptions, and the 'try-with-resources' statement, vital for building resilient backend services. It also has Hindi audio."
+                        }
+                    ]
+                },
+                {
+                    "title": "Data Structures & Algorithms (DSA) in Java",
+                    "description": "Understand and implement fundamental data structures (arrays, linked lists, stacks, queues, trees, hash maps) and common algorithms (sorting, searching), essential for problem-solving in backend development and technical interviews.",
+                    "duration": "3 weeks",
+                    "outcomes": [
+                        "Implement and analyze common data structures like arrays, linked lists, stacks, and queues.",
+                        "Understand tree and hash map concepts and their applications.",
+                        "Apply basic sorting algorithms (Bubble, Selection, Insertion, Quick, Merge Sort) and searching algorithms (Linear, Binary Search).",
+                        "Improve problem-solving skills for coding interviews."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Data Structures and Algorithms (DSA) in Java 2024",
+                            "url": "https://www.youtube.com/watch?v=4_HOnhB64Dg",
+                            "whyChosen": "This nearly 5-hour course offers a comprehensive introduction to DSA in Java, covering a wide range of data structures and algorithms with practical implementations, directly aligning with the module's goal for job preparation."
+                        },
+                        {
+                            "title": "HashMap in Java | Hashing | Java Placement Course | Data Structures & Algorithms",
+                            "url": "https://www.youtube.com/watch?v=WeF3_nk-UqY",
+                            "whyChosen": "This video specifically focuses on HashMap and hashing concepts, which are critical data structures frequently used in backend development and common in technical interviews."
+                        },
+                        {
+                            "title": "Introduction to Linked List | Data Structures & Algorithms | Java Placement Course",
+                            "url": "https://www.youtube.com/watch?v=oAja8-Ulz6o",
+                            "whyChosen": "A dedicated tutorial on Linked Lists, explaining their implementation and operations, which is a fundamental data structure concept for any backend developer."
+                        },
+                        {
+                            "title": "Sorting in Java | Bubble Sort, Selection Sort & Insertion Sort | Java Placement Course",
+                            "url": "https://www.youtube.com/watch?v=PkJIc5tBRUE",
+                            "whyChosen": "This video provides detailed explanations and Java implementations of essential sorting algorithms, complementing the broader DSA course and preparing the user for algorithm-related interview questions."
+                        }
+                    ]
+                },
+                {
+                    "title": "Database Fundamentals & SQL",
+                    "description": "Grasp relational database concepts, design basic schemas, and write complex SQL queries for data manipulation, a core skill for any backend developer.",
+                    "duration": "1.5 weeks",
+                    "outcomes": [
+                        "Understand relational database principles, including tables, keys, and normalization.",
+                        "Design basic database schemas using ER diagrams.",
+                        "Write DDL commands for database and table creation/modification.",
+                        "Perform CRUD operations and complex queries using DML, joins, subqueries, and aggregate functions.",
+                        "Interact with a MySQL or PostgreSQL database from a developer's perspective."
+                    ],
+                    "videos": [
+                        {
+                            "title": "SQL Tutorial - Full Database Course for Beginners",
+                            "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+                            "whyChosen": "This comprehensive course covers database management basics, SQL operations (CRUD, aggregation, joins), and crucially, ER diagrams and schema design, directly addressing the module's goal of understanding database design."
+                        },
+                        {
+                            "title": "SQL Tutorial for Beginners (Complete Course using MySQL)",
+                            "url": "https://www.youtube.com/watch?v=yE6tIle64tU",
+                            "whyChosen": "An excellent, complete SQL course using MySQL that covers DDL, DML, joins, subqueries, and functions. Its availability in Hindi is a significant benefit for the user's language preference."
+                        },
+                        {
+                            "title": "A Beginner's Guide to Designing a Relational Database (Databases 101)",
+                            "url": "https://www.youtube.com/watch?v=fXndSzAL1Nc",
+                            "whyChosen": "This video specifically focuses on the principles of relational database design, including normalization and integrity, which is essential for designing robust backend data models."
+                        }
+                    ]
+                },
+                {
+                    "title": "Introduction to Spring Boot & MVC",
+                    "description": "Set up a Spring Boot project, understand core annotations, and build a basic web application using the MVC pattern, marking your entry into modern Java backend development.",
+                    "duration": "1.5 weeks",
+                    "outcomes": [
+                        "Initialize and configure a Spring Boot project.",
+                        "Understand and apply core Spring Boot annotations like @SpringBootApplication and @RestController.",
+                        "Implement Dependency Injection and understand the Spring IoC container.",
+                        "Build a basic web application using the Model-View-Controller (MVC) pattern.",
+                        "Run and debug Spring Boot applications."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Spring Boot Tutorial for Beginners [2025]",
+                            "url": "https://www.youtube.com/watch?v=gJrjgg1KVL4",
+                            "whyChosen": "This tutorial is perfect for beginners, covering Spring Boot setup, project structure, dependency injection, and building a first controller, which are fundamental for starting with Spring Boot. It's a long video, aligning with the user's preference."
+                        },
+                        {
+                            "title": "Spring Boot & Spring Framework Full Course | Spring Boot Full Course #1",
+                            "url": "https://www.youtube.com/watch?v=Q04sTEwC7Kg",
+                            "whyChosen": "Provides essential conceptual context by explaining the evolution of Spring and Spring Boot, client-server architecture, and the overall Spring ecosystem, crucial for understanding why Spring Boot is used. It also has Hindi audio."
+                        },
+                        {
+                            "title": "Spring Boot Tutorials | Full Course",
+                            "url": "https://www.youtube.com/watch?v=35EQXmHKZYs",
+                            "whyChosen": "This full course includes sections specifically on building web applications with Spring Boot and understanding ModelAndView, directly supporting the goal of learning the MVC pattern in Spring Boot."
+                        }
+                    ]
+                },
+                {
+                    "title": "RESTful APIs with Spring Boot",
+                    "description": "Design, implement, and test RESTful APIs using Spring Boot, understanding HTTP methods, request/response bodies, and status codes, a cornerstone of modern backend services.",
+                    "duration": "2 weeks",
+                    "outcomes": [
+                        "Design and implement RESTful APIs following best practices.",
+                        "Handle various HTTP methods (GET, POST, PUT, DELETE) for CRUD operations.",
+                        "Work with request and response bodies (JSON).",
+                        "Utilize tools like Postman for testing API endpoints.",
+                        "Understand HTTP status codes and their appropriate use."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Java REST API with Spring Boot Tutorial | REST API CRUD Implementation",
+                            "url": "https://www.youtube.com/watch?v=iBGkJln9BPo",
+                            "whyChosen": "This tutorial directly demonstrates the implementation of all CRUD operations for a REST API using Spring Boot and shows how to test them with Postman, perfectly aligning with the module's practical goals."
+                        },
+                        {
+                            "title": "Build Your First Spring Boot Application | REST API | Spring Boot Full Course #2",
+                            "url": "https://www.youtube.com/watch?v=PVreyET_Q6I",
+                            "whyChosen": "This video builds upon the introduction to Spring Boot by guiding the user through creating their very first REST endpoint, providing a hands-on start to API development. Its Hindi audio is an added benefit."
+                        },
+                        {
+                            "title": "Build a Spring Boot 4 REST API in Minutes",
+                            "url": "https://www.youtube.com/watch?v=klnxzL8oQdM",
+                            "whyChosen": "Offers a quick and practical demonstration of building a basic CRUD REST API with Spring Boot, reinforcing the core concepts of API creation and HTTP methods."
+                        }
+                    ]
+                },
+                {
+                    "title": "Data Persistence with Spring Data JPA & Hibernate",
+                    "description": "Integrate Spring Boot applications with relational databases using Spring Data JPA, understand ORM concepts with Hibernate, and perform CRUD operations, enabling robust data management.",
+                    "duration": "2 weeks",
+                    "outcomes": [
+                        "Connect Spring Boot applications to relational databases (e.g., MySQL, PostgreSQL).",
+                        "Define JPA entities and map them to database tables.",
+                        "Utilize Spring Data JPA repositories for simplified data access operations.",
+                        "Understand Hibernate as an ORM and manage entity relationships (one-to-one, one-to-many, many-to-many).",
+                        "Perform advanced data operations like pagination and custom queries."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Spring Data JPA Tutorial | Full In-depth Course",
+                            "url": "https://www.youtube.com/watch?v=XszpXoII9Sg",
+                            "whyChosen": "This in-depth course covers Spring Data JPA comprehensively, including entity mapping, repositories, various relationship types, and paging/sorting, which are crucial for building data-driven backend applications."
+                        },
+                        {
+                            "title": "Spring Boot Hibernate MySQL CRUD REST API Tutorial | Controller, Service and DAO Layer | Full Course",
+                            "url": "https://www.youtube.com/watch?v=4Ico2HjRTCE",
+                            "whyChosen": "Provides a practical, project-based approach to building a CRUD REST API with Spring Boot, Hibernate, and MySQL, allowing the user to apply data persistence concepts in a real-world context."
+                        },
+                        {
+                            "title": "Master Spring Data JPA in one video | JpaRepository, JPQL, Pagination | Spring Boot Full Course #32",
+                            "url": "https://www.youtube.com/watch?v=xugZno16FgQ",
+                            "whyChosen": "This masterclass delves into the internals of Spring Data JPA, covering JpaRepository, JPQL, and advanced features like pagination, providing a deeper understanding for robust backend development. It also has Hindi audio."
+                        }
+                    ]
+                },
+                {
+                    "title": "Spring Boot Security (Authentication & Authorization)",
+                    "description": "Implement basic authentication (e.g., JWT) and authorization mechanisms in a Spring Boot REST API, ensuring your applications are secure.",
+                    "duration": "1.5 weeks",
+                    "outcomes": [
+                        "Understand the core concepts of authentication and authorization in web applications.",
+                        "Implement Spring Security for securing RESTful APIs.",
+                        "Integrate JWT (JSON Web Tokens) for token-based authentication.",
+                        "Configure user management and role-based access control.",
+                        "Protect API endpoints from unauthorized access."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Spring Security 6 with Spring Boot and JWT Tutorial",
+                            "url": "https://www.youtube.com/watch?v=oeni_9g7too",
+                            "whyChosen": "This comprehensive tutorial covers Spring Security 6, user management, password encoding, and a detailed implementation of JWT for authentication and authorization, directly addressing the module's security goals."
+                        },
+                        {
+                            "title": "Complete JWT Authentication and Authorisation in Spring Boot",
+                            "url": "https://www.youtube.com/watch?v=qvAoUVXgpZg",
+                            "whyChosen": "Offers a complete practical implementation of JWT authentication and authorization in Spring Boot, reinforcing the concepts learned and providing a hands-on example. It also has Hindi audio."
+                        },
+                        {
+                            "title": "Spring Boot + Spring Security + JWT from scratch - Java Brains",
+                            "url": "https://www.youtube.com/watch?v=X80nJ5T7YpE",
+                            "whyChosen": "A classic and clear tutorial on building JWT-based authentication and authorization from scratch, providing an alternative perspective and solidifying understanding of the process."
+                        }
+                    ]
+                },
+                {
+                    "title": "Testing Spring Boot Applications",
+                    "description": "Write effective unit tests and integration tests for various layers of a Spring Boot application using JUnit and Mockito, ensuring code quality and reliability.",
+                    "duration": "1 week",
+                    "outcomes": [
+                        "Understand the importance and principles of unit and integration testing.",
+                        "Write unit tests for controllers, services, and repositories using JUnit 5 and Mockito.",
+                        "Perform integration tests for Spring Boot REST APIs.",
+                        "Utilize in-memory databases like H2 for testing.",
+                        "Measure code coverage and improve test quality."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Master Unit Testing Java Spring Boot REST API Application in One Shot | Full Course",
+                            "url": "https://www.youtube.com/watch?v=HqiEM5HQsZs",
+                            "whyChosen": "This 'one-shot' course comprehensively covers unit testing for all layers (controller, service, repository) of a Spring Boot REST API using JUnit, Mockito, and H2, perfectly matching the module's goal for thorough testing."
+                        },
+                        {
+                            "title": "Unit Testing in Spring Boot with JUnit 5 and Mockito | Part 1",
+                            "url": "https://www.youtube.com/watch?v=XVFqOFKGeGM",
+                            "whyChosen": "Provides a clear introduction to unit testing basics, setup, and writing the first test case in Spring Boot with JUnit 5 and Mockito, which is crucial for beginners to grasp testing fundamentals."
+                        },
+                        {
+                            "title": "Spring Boot Integration Test with TDD | JUnit5  & H2 | JavaTechie",
+                            "url": "https://www.youtube.com/watch?v=Hh17JDpsKqc",
+                            "whyChosen": "Focuses on practical integration testing for CRUD REST APIs using JUnit5 and H2 database, reinforcing the broader testing concepts and demonstrating real-world application."
+                        }
+                    ]
+                },
+                {
+                    "title": "Deployment & DevOps Basics",
+                    "description": "Understand containerization with Docker and basic deployment strategies for Spring Boot applications to cloud platforms, preparing your applications for production.",
+                    "duration": "1 week",
+                    "outcomes": [
+                        "Understand the benefits of containerization with Docker.",
+                        "Create Docker images and write Dockerfiles for Spring Boot applications.",
+                        "Use Docker Compose to manage multi-container applications (e.g., Spring Boot with MySQL).",
+                        "Explore basic strategies for deploying Spring Boot applications to cloud platforms.",
+                        "Gain familiarity with essential DevOps concepts for backend services."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Docker In One Shot 2026 🔥 From Zero To Hero (Spring Boot + MySQL) ✅",
+                            "url": "https://www.youtube.com/watch?v=kOryO5I_w14",
+                            "whyChosen": "This comprehensive 'one-shot' Docker course is specifically tailored for Spring Boot and MySQL, covering Docker concepts, Dockerfiles, Docker Compose, and networking, which is ideal for containerizing backend applications."
+                        },
+                        {
+                            "title": "Spring Boot Docker Tutorial🔥| Dockerizing a Spring Boot Application | @RameshFadatare",
+                            "url": "https://www.youtube.com/watch?v=05ADPwAmiAs",
+                            "whyChosen": "Provides a clear, step-by-step guide to Dockerizing a Spring Boot application, including building images, running containers, and pushing to DockerHub, essential for deployment."
+                        },
+                        {
+                            "title": "🔥Alternative to Heroku Cloud  for Spring Boot | Deploying Spring Boot for free | Hindi",
+                            "url": "https://www.youtube.com/watch?v=gjOmfoG7YO4",
+                            "whyChosen": "Addresses practical deployment strategies to cloud platforms, focusing on free options for Spring Boot applications, which is highly relevant for beginners looking to deploy their projects. Its Hindi audio is a bonus."
+                        }
+                    ]
+                },
+                {
+                    "title": "Capstone Project: E-commerce Backend",
+                    "description": "Build a complete, multi-module backend for an e-commerce application, integrating all previously learned concepts in a substantial, resume-worthy project.",
+                    "duration": "3 weeks",
+                    "outcomes": [
+                        "Design and implement a complex backend system for an e-commerce platform.",
+                        "Integrate Spring Boot with a database, security, and other services.",
+                        "Apply best practices for clean architecture and robust implementation.",
+                        "Develop multiple features like product management, user authentication, and order processing.",
+                        "Demonstrate a complete backend project for job applications."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Learn To Build Java Full Stack Ecommerce Project Using Spring boot, React, MySQL, Redux Toolkit",
+                            "url": "https://www.youtube.com/watch?v=7SBcUjgZRoY",
+                            "whyChosen": "This extremely long and comprehensive tutorial guides the user through building a full-stack e-commerce project, providing an excellent opportunity to apply all learned backend concepts in a large-scale application suitable for a job portfolio."
+                        },
+                        {
+                            "title": "Complete Java Spring Boot & Spring Framework Project: Build a Production-Grade eCommerce App Project",
+                            "url": "https://www.youtube.com/watch?v=m559BxR30ls",
+                            "whyChosen": "A very detailed project focusing on building a production-grade e-commerce backend with Spring Boot, covering numerous integrations and scenarios, which is ideal for a capstone project to solidify skills."
+                        },
+                        {
+                            "title": "Spring Boot Project: Build a REST API for an E-commerce Platform",
+                            "url": "https://www.youtube.com/watch?v=EWd3_I4X32g",
+                            "whyChosen": "This video specifically focuses on building the REST API for an e-commerce platform, which is the core backend component, providing a solid, focused project example to integrate previous learning."
+                        }
+                    ]
+                },
+                {
+                    "title": "Interview Preparation & Resume Building",
+                    "description": "Prepare for technical interviews, understand common questions, practice problem-solving, and create a compelling resume tailored for backend development roles.",
+                    "duration": "1 week",
+                    "outcomes": [
+                        "Identify and answer common Java, Spring Boot, OOP, and DSA interview questions.",
+                        "Understand basic system design concepts for backend roles.",
+                        "Develop strategies for effective communication during technical interviews.",
+                        "Craft a professional resume highlighting relevant skills and projects for backend developer positions.",
+                        "Gain confidence for backend development job interviews."
+                    ],
+                    "videos": [
+                        {
+                            "title": "Top 80+ Spring boot Interview Questions and Answers in 60 min | 2026 | Code Decode",
+                            "url": "https://www.youtube.com/watch?v=ZURnrDZDj0U",
+                            "whyChosen": "This video covers a broad range of Spring Boot, Spring Framework, Spring Security, and JPA interview questions, which are essential for preparing for backend developer roles."
+                        },
+                        {
+                            "title": "Master Spring Boot Interviews — 50 Questions in One Shot !",
+                            "url": "https://www.youtube.com/watch?v=Dw4NyiDiXDQ",
+                            "whyChosen": "Offers 50 commonly asked Spring Boot interview questions, providing a good breadth of topics to review and practice, crucial for comprehensive interview preparation."
+                        },
+                        {
+                            "title": "Java Backend Developer Interview | Spring Boot | 4 Years",
+                            "url": "https://www.youtube.com/watch?v=Ou4PBRIqhsE",
+                            "whyChosen": "Focuses on Java Backend Developer interview scenarios, including Spring Boot specific topics, and its Hindi audio makes it particularly relevant and accessible for the user."
+                        }
+                    ]
+                }
+            ],
+            "playlist": [
+                {
+                    "title": "Java Full Course for Beginners",
+                    "url": "https://www.youtube.com/watch?v=eIrMbAQSU34",
+                    "channel": "Programming with Mosh",
+                    "duration": "PT2H30M48S"
+                },
+                {
+                    "title": "Java Tutorial for Beginners | Learn Java in 2 Hours",
+                    "url": "https://www.youtube.com/watch?v=UmnCZ7-9yDY",
+                    "channel": "Apna College",
+                    "duration": "PT2H4M35S"
+                },
+                {
+                    "title": "Java Programming Full Tutorial in One Video (2024) | Java full course",
+                    "url": "https://www.youtube.com/watch?v=32DLasxoOiM",
+                    "channel": "CoDing SeeKho ",
+                    "duration": "PT18H34M21S"
+                },
+                {
+                    "title": "Java OOPs in One Shot | Object Oriented Programming | Java Language | Placement Course",
+                    "url": "https://www.youtube.com/watch?v=bSrm9RXwBaI",
+                    "channel": "Apna College",
+                    "duration": "PT1H6M27S"
+                },
+                {
+                    "title": "Object Oriented Programming  in Java | Classes, Objects, new Keyword | Java Full Course #12",
+                    "url": "https://www.youtube.com/watch?v=tmXD7Kzun54",
+                    "channel": "Coder Army",
+                    "duration": "PT1H5M11S"
+                },
+                {
+                    "title": "Master OOP in Java: Encapsulation, Abstraction, Polymorphism & Inheritance Explained in 20 Minutes",
+                    "url": "https://www.youtube.com/watch?v=LqPl23MTK5o",
+                    "channel": "Engineering Digest",
+                    "duration": "PT22M47S"
+                },
+                {
+                    "title": "Java Interfaces Deep Dive | Default Methods, Functional, Marker Interfaces | Java Full Course #24",
+                    "url": "https://www.youtube.com/watch?v=YLLFHuStkW8",
+                    "channel": "Coder Army",
+                    "duration": "PT59M55S"
+                },
+                {
+                    "title": "Complete Java Collections Framework in 1 Video - Java Collections Framework",
+                    "url": "https://www.youtube.com/watch?v=rzA7UJ-hQn4",
+                    "channel": "Anuj Kumar Sharma",
+                    "duration": "PT1H16M9S"
+                },
+                {
+                    "title": "Master Exceptions in Java: Try, Catch, Finally, Throw, Throws, try-with-resources & Custom Exception",
+                    "url": "https://www.youtube.com/watch?v=IZu5rZTN7PI",
+                    "channel": "Engineering Digest",
+                    "duration": "PT52M21S"
+                },
+                {
+                    "title": "Data Structures and Algorithms (DSA) in Java 2024",
+                    "url": "https://www.youtube.com/watch?v=4_HOnhB64Dg",
+                    "channel": "Telusko",
+                    "duration": "PT4H54M17S"
+                },
+                {
+                    "title": "HashMap in Java | Hashing | Java Placement Course | Data Structures & Algorithms",
+                    "url": "https://www.youtube.com/watch?v=WeF3_nk-UqY",
+                    "channel": "Apna College",
+                    "duration": "PT24M10S"
+                },
+                {
+                    "title": "Introduction to Linked List | Data Structures & Algorithms | Java Placement Course",
+                    "url": "https://www.youtube.com/watch?v=oAja8-Ulz6o",
+                    "channel": "Apna College",
+                    "duration": "PT48M50S"
+                },
+                {
+                    "title": "Sorting in Java | Bubble Sort, Selection Sort & Insertion Sort | Java Placement Course",
+                    "url": "https://www.youtube.com/watch?v=PkJIc5tBRUE",
+                    "channel": "Apna College",
+                    "duration": "PT33M29S"
+                },
+                {
+                    "title": "SQL Tutorial - Full Database Course for Beginners",
+                    "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+                    "channel": "freeCodeCamp.org",
+                    "duration": "PT4H20M39S"
+                },
+                {
+                    "title": "SQL Tutorial for Beginners (Complete Course using MySQL)",
+                    "url": "https://www.youtube.com/watch?v=yE6tIle64tU",
+                    "channel": "CodeWithHarry",
+                    "duration": "PT3H57M54S"
+                },
+                {
+                    "title": "A Beginner's Guide to Designing a Relational Database (Databases 101)",
+                    "url": "https://www.youtube.com/watch?v=fXndSzAL1Nc",
+                    "channel": "Software Developer Diaries",
+                    "duration": "PT25M47S"
+                },
+                {
+                    "title": "Spring Boot Tutorial for Beginners [2025]",
+                    "url": "https://www.youtube.com/watch?v=gJrjgg1KVL4",
+                    "channel": "Programming with Mosh",
+                    "duration": "PT1H11M22S"
+                },
+                {
+                    "title": "Spring Boot & Spring Framework Full Course | Spring Boot Full Course #1",
+                    "url": "https://www.youtube.com/watch?v=Q04sTEwC7Kg",
+                    "channel": "Coder Army",
+                    "duration": "PT43M41S"
+                },
+                {
+                    "title": "Spring Boot Tutorials | Full Course",
+                    "url": "https://www.youtube.com/watch?v=35EQXmHKZYs",
+                    "channel": "Telusko",
+                    "duration": "PT2H48M8S"
+                },
+                {
+                    "title": "Java REST API with Spring Boot Tutorial | REST API CRUD Implementation",
+                    "url": "https://www.youtube.com/watch?v=iBGkJln9BPo",
+                    "channel": "Think Constructive",
+                    "duration": "PT36M27S"
+                },
+                {
+                    "title": "Build Your First Spring Boot Application | REST API | Spring Boot Full Course #2",
+                    "url": "https://www.youtube.com/watch?v=PVreyET_Q6I",
+                    "channel": "Coder Army",
+                    "duration": "PT31M12S"
+                },
+                {
+                    "title": "Build a Spring Boot 4 REST API in Minutes",
+                    "url": "https://www.youtube.com/watch?v=klnxzL8oQdM",
+                    "channel": "Dan Vega",
+                    "duration": "PT25M32S"
+                },
+                {
+                    "title": "Spring Data JPA Tutorial | Full In-depth Course",
+                    "url": "https://www.youtube.com/watch?v=XszpXoII9Sg",
+                    "channel": "Daily Code Buffer",
+                    "duration": "PT2H20M14S"
+                },
+                {
+                    "title": "Spring Boot Hibernate MySQL CRUD REST API Tutorial | Controller, Service and DAO Layer | Full Course",
+                    "url": "https://www.youtube.com/watch?v=4Ico2HjRTCE",
+                    "channel": "Java Guides",
+                    "duration": "PT1H27M46S"
+                },
+                {
+                    "title": "Master Spring Data JPA in one video | JpaRepository, JPQL, Pagination | Spring Boot Full Course #32",
+                    "url": "https://www.youtube.com/watch?v=xugZno16FgQ",
+                    "channel": "Coder Army",
+                    "duration": "PT1H47M37S"
+                },
+                {
+                    "title": "Spring Security 6 with Spring Boot and JWT Tutorial",
+                    "url": "https://www.youtube.com/watch?v=oeni_9g7too",
+                    "channel": "Telusko",
+                    "duration": "PT3H14M14S"
+                },
+                {
+                    "title": "Complete JWT Authentication and Authorisation in Spring Boot",
+                    "url": "https://www.youtube.com/watch?v=qvAoUVXgpZg",
+                    "channel": "Engineering Digest",
+                    "duration": "PT48M43S"
+                },
+                {
+                    "title": "Spring Boot + Spring Security + JWT from scratch - Java Brains",
+                    "url": "https://www.youtube.com/watch?v=X80nJ5T7YpE",
+                    "channel": "Java Brains",
+                    "duration": "PT39M29S"
+                },
+                {
+                    "title": "Master Unit Testing Java Spring Boot REST API Application in One Shot | Full Course",
+                    "url": "https://www.youtube.com/watch?v=HqiEM5HQsZs",
+                    "channel": "Think Constructive",
+                    "duration": "PT1H41M43S"
+                },
+                {
+                    "title": "Unit Testing in Spring Boot with JUnit 5 and Mockito | Part 1",
+                    "url": "https://www.youtube.com/watch?v=XVFqOFKGeGM",
+                    "channel": "CodeSnippet by Chetan",
+                    "duration": "PT30M37S"
+                },
+                {
+                    "title": "Spring Boot Integration Test with TDD | JUnit5  & H2 | JavaTechie",
+                    "url": "https://www.youtube.com/watch?v=Hh17JDpsKqc",
+                    "channel": "Java Techie",
+                    "duration": "PT45M27S"
+                },
+                {
+                    "title": "Docker In One Shot 2026 🔥 From Zero To Hero (Spring Boot + MySQL) ✅",
+                    "url": "https://www.youtube.com/watch?v=kOryO5I_w14",
+                    "channel": "CodeSnippet by Chetan",
+                    "duration": "PT1H21M11S"
+                },
+                {
+                    "title": "Spring Boot Docker Tutorial🔥| Dockerizing a Spring Boot Application | @RameshFadatare",
+                    "url": "https://www.youtube.com/watch?v=05ADPwAmiAs",
+                    "channel": "Java Guides",
+                    "duration": "PT46M17S"
+                },
+                {
+                    "title": "🔥Alternative to Heroku Cloud  for Spring Boot | Deploying Spring Boot for free | Hindi",
+                    "url": "https://www.youtube.com/watch?v=gjOmfoG7YO4",
+                    "channel": "Learn Code With Durgesh",
+                    "duration": "PT32M8S"
+                },
+                {
+                    "title": "Learn To Build Java Full Stack Ecommerce Project Using Spring boot, React, MySQL, Redux Toolkit",
+                    "url": "https://www.youtube.com/watch?v=7SBcUjgZRoY",
+                    "channel": "Code With Zosh",
+                    "duration": "P1DT10H11M57S"
+                },
+                {
+                    "title": "Complete Java Spring Boot & Spring Framework Project: Build a Production-Grade eCommerce App Project",
+                    "url": "https://www.youtube.com/watch?v=m559BxR30ls",
+                    "channel": "EmbarkX | Real Engineering | Faisal Memon",
+                    "duration": "PT9H33M51S"
+                },
+                {
+                    "title": "Spring Boot Project: Build a REST API for an E-commerce Platform",
+                    "url": "https://www.youtube.com/watch?v=EWd3_I4X32g",
+                    "channel": "Programming with Mosh",
+                    "duration": "PT2H17S"
+                },
+                {
+                    "title": "Top 80+ Spring boot Interview Questions and Answers in 60 min | 2026 | Code Decode",
+                    "url": "https://www.youtube.com/watch?v=ZURnrDZDj0U",
+                    "channel": "Code Decode",
+                    "duration": "PT55M48S"
+                },
+                {
+                    "title": "Master Spring Boot Interviews — 50 Questions in One Shot !",
+                    "url": "https://www.youtube.com/watch?v=Dw4NyiDiXDQ",
+                    "channel": "The Curious Coder",
+                    "duration": "PT25M18S"
+                },
+                {
+                    "title": "Java Backend Developer Interview | Spring Boot | 4 Years",
+                    "url": "https://www.youtube.com/watch?v=Ou4PBRIqhsE",
+                    "channel": "GenZ Career",
+                    "duration": "PT41M38S"
+                }
+            ],
+            "metadata": {
+                "totalTime": "23.5 weeks (approx. 282 hours)",
+                "difficultyCurve": "Starts at beginner level with Java fundamentals, gradually increases through intermediate Java concepts, DSA, and Spring Boot, culminating in an advanced capstone project and interview preparation.",
+                "version": "v1"
+            },
+            "user_id": "69d0de9b28a24f21ec797aac",
+            "created_at": "2026-10-10T07:23:22.566570+00:00",
+            "id": "6ac9e7eaf2439a9463f2b2ae"
+        }
