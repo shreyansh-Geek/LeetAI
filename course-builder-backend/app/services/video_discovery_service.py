@@ -74,7 +74,31 @@ def discover_videos_for_modules(
                 seen_ids.add(vid)
                 deduped.append(video)
 
-        ranked = rank_videos(profile, deduped, max_videos=5)
-        module_video_map[module_id] = ranked
+        module_context = " ".join(
+    [
+        str(module.get("title", "")),
+        str(module.get("stageGoal", "")),
+        *[
+            str(plan.get("query", ""))
+            for plan in search_plan
+        ],
+    ]
+)
+
+    ranked = rank_videos(
+        profile,
+        deduped,
+        max_videos=5,
+        module_context=module_context,
+    )
+
+    module_video_map[module_id] = ranked
+
+    logger.info(
+        "Video discovery completed | module=%s | candidates=%d | ranked=%d",
+        module_id,
+        len(deduped),
+        len(ranked),
+    )
 
     return module_video_map
