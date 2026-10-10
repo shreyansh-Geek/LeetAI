@@ -75,6 +75,7 @@ TASK:
 Convert this into a finalized course JSON with this EXACT schema:
 
 {{
+  "title": "A concise, topic-specific course title",
   "summary": "",
   "modules": [
     {{
@@ -107,11 +108,25 @@ Convert this into a finalized course JSON with this EXACT schema:
 }}
 
 Rules:
-- Use ONLY the provided videos. Do not invent URLs.
-- Explain "whyChosen" by linking the video to the user profile (goals, constraints).
-- Ensure difficultyCurve is coherent from the user's skillLevel to their goal.
-- Derive totalTime using the durations you see + profile.hoursPerDay/daysPerWeek.
-- Keep descriptions and outcomes practical and concise.
-- Return ONLY valid JSON
-- Do not include markdown
+- Use ONLY the provided candidate videos. Never invent URLs, video titles, channels, or durations.
+- Assign videos to the module whose learning objective they best support.
+- Use the module skeleton's title, stageGoal, and searchPlan to determine relevance.
+- Do not assign the same video more than once within a module.
+- Prefer relevant videos over filling a module with unrelated videos.
+- If a module has no relevant candidate videos, return an empty videos array for that module.
+- Every module must contain a videos array, even if it is empty.
+- Build the global playlist from the selected module videos only.
+- Every playlist item must correspond to a video assigned to at least one module.
+- Use the same video URL consistently in modules and the global playlist.
+- Do not add videos to the global playlist that are absent from all module videos.
+- Preserve the actual title, URL, channel, and duration of each selected candidate video.
+- For each module video, explain whyChosen in terms of that module's learning objective and the user's goals.
+- Generate a concise, meaningful, topic-specific course title as a non-empty string.
+- Ensure difficultyCurve progresses logically from the user's current skill level toward their goal.
+- Estimate totalTime realistically using the module durations and the user's hoursPerDay/daysPerWeek.
+- Keep module descriptions and learning outcomes practical and concise.
+- Return ONLY valid JSON.
+- Do not include markdown.
+
+
 """.strip()
