@@ -37,7 +37,15 @@ async def finalize_course(
     response_text = await invoke_course_llm(prompt)
     parsed = extract_json_block(response_text)
 
-    if "modules" not in parsed or not isinstance(parsed["modules"], list):
+    
+    if not isinstance(parsed, dict):
+        raise ValueError("Invalid final course response: expected a JSON object")
+
+    title = parsed.get("title")
+    if not isinstance(title, str) or not title.strip():
+        raise ValueError("Invalid final course response: missing or empty 'title'")
+
+    if not isinstance(parsed.get("modules"), list):
         raise ValueError("Invalid final course response: missing 'modules' list")
 
     return parsed

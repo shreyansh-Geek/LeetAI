@@ -29,11 +29,17 @@ class CourseBuildRequest(BaseModel):
     profile: Profile
     userSummary: Optional[str] = None
 
+
 class CourseBuildResponse(BaseModel):
     id: Optional[str] = None
     user_id: Optional[str] = None
     created_at: Optional[str] = None
+
+    # Optional for backward compatibility with older saved courses.
+    title: Optional[str] = None
+
     summary: str
     modules: List[CourseModule]
     playlist: List[PlaylistItem]
     metadata: CourseMetadata
+
