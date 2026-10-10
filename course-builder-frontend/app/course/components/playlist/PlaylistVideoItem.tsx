@@ -16,9 +16,7 @@ interface Props {
 }
 
 export function PlaylistVideoItem({ video, index }: Props) {
-  const duration = typeof video.duration === "string"
-    ? parseInt(video.duration)
-    : video.duration || 0;
+  const duration = video.duration;
 
   return (
     <a
