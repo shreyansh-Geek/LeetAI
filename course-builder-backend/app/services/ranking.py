@@ -21,7 +21,50 @@ def _channel_in_list(channel_title: str, blob: str) -> bool:
     return channel_title.lower() in blob.lower()
 
 
-def score_video(profile: Profile, video: Dict) -> float:
+import re
+
+STOP_WORDS = {
+    "the", "a", "an", "and", "or", "for", "to", "of", "in",
+    "on", "with", "from", "by", "is", "are", "how", "what",
+    "learn", "learning", "tutorial", "course", "best", "using",
+}
+
+
+def _module_relevance(
+    context: str,
+    title: str,
+    description: str,
+) -> float:
+    """Score overlap between a module's learning context and a video."""
+    tokens = {
+        word
+        for word in re.findall(r"[a-z0-9+#.]+", context.lower())
+        if len(word) > 1 and word not in STOP_WORDS
+    }
+
+    if not tokens:
+        return 0.0
+
+    title_text = title.lower()
+    description_text = description.lower()
+
+    title_matches = sum(
+        1 for word in tokens if word in title_text
+    )
+    description_matches = sum(
+        1 for word in tokens if word in description_text
+    )
+
+    # Titles provide stronger evidence of relevance than descriptions.
+    return (
+        3.0 * title_matches + 0.5 * description_matches
+    ) / len(tokens)
+
+def score_video(
+    profile: Profile,
+    video: Dict,
+    module_context: str = "",
+) -> float:
     """
     Compute a numeric score for a YouTube video given the user's profile.
     Higher = better.
@@ -87,10 +130,21 @@ def score_video(profile: Profile, video: Dict) -> float:
             freshness = 0.0
 
     # ---------- Topic relevance ----------
-    topic = (profile.topic or "").lower()
-    in_title = topic in title.lower()
-    in_desc = topic in description.lower()
-    topic_score = 1.5 if in_title else (0.8 if in_desc else 0.3)
+    topic = (profile.topic or "").strip()
+
+    profile_relevance = _module_relevance(
+        topic,
+        title,
+        description,
+    )
+
+    module_relevance = _module_relevance(
+        module_context,
+        title,
+        description,
+    )
+
+    topic_score = max(profile_relevance, module_relevance)
 
     score = (
         base * 1.0
@@ -104,7 +158,20 @@ def score_video(profile: Profile, video: Dict) -> float:
     return score
 
 
-def rank_videos(profile: Profile, videos: List[Dict], max_videos: int = 5) -> List[Dict]:
-    scored = [(score_video(profile, v), v) for v in videos]
-    scored.sort(key=lambda x: x[0], reverse=True)
-    return [v for _, v in scored[:max_videos]]
+def rank_videos(
+    profile: Profile,
+    videos: List[Dict],
+    max_videos: int = 5,
+    module_context: str = "",
+) -> List[Dict]:
+    scored = [
+        (
+            score_video(profile, video, module_context),
+            video,
+        )
+        for video in videos
+    ]
+
+    scored.sort(key=lambda item: item[0], reverse=True)
+
+    return [video for _, video in scored[:max_videos]]
